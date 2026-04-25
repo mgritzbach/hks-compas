@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HKS Compass — Harvard Kennedy School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & TOKENS ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --crimson:       #A41034;
+      --crimson-dark:  #7A0C27;
+      --crimson-light: #F5E6EA;
+      --black:         #1A1A1A;
+      --gray-800:      #1F2937;
+      --gray-700:      #374151;
+      --gray-500:      #6B7280;
+      --gray-300:      #D1D5DB;
+      --gray-200:      #E5E7EB;
+      --gray-100:      #F3F4F6;
+      --gray-50:       #F9FAFB;
+      --white:         #FFFFFF;
+      --link-blue:     #1D4ED8;
+      --link-hover:    #1E3A8A;
+      --emergency-red: #DC2626;
+      --shadow-sm:     0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md:     0 4px 14px rgba(0,0,0,0.11);
+      --shadow-lg:     0 8px 28px rgba(0,0,0,0.16);
+      --radius-sm:     4px;
+      --radius-md:     8px;
+      --radius-lg:     12px;
+      --radius-pill:   9999px;
+      --t:             0.18s ease;
+      --font-serif:    'Playfair Display', Georgia, serif;
+      --font-sans:     'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--gray-50);
+      color: var(--black);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ─── SKIP LINK ──────────────────────────────────────────── */
+    .skip-link {
+      position: absolute; top: -999px; left: 1rem;
+      background: var(--crimson); color: var(--white);
+      padding: 0.5rem 1rem; border-radius: var(--radius-sm);
+      font-size: 0.875rem; font-weight: 600; z-index: 10000;
+      text-decoration: none;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    /* ─── HEADER ─────────────────────────────────────────────── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--white);
+      border-bottom: 3px solid var(--crimson);
+      box-shadow: var(--shadow-sm);
+    }
+    .header-inner {
+      max-width: 1280px; margin: 0 auto;
+      padding: 0.875rem 1.5rem;
+      display: flex; align-items: center; gap: 1.5rem;
+    }
+    .logo {
+      font-family: var(--font-serif);
+      font-size: 1.375rem; font-weight: 700;
+      color: var(--crimson); white-space: nowrap;
+      letter-spacing: -0.01em; flex-shrink: 0;
+      text-decoration: none; line-height: 1;
+    }
+    .logo span { color: var(--black); font-weight: 600; }
+
+    /* Search */
+    .search-wrap { flex: 1; position: relative; max-width: 560px; }
+    .search-icon-svg {
+      position: absolute; left: 0.9rem; top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray-500); pointer-events: none;
+      width: 17px; height: 17px; flex-shrink: 0;
+    }
+    #search {
+      width: 100%;
+      padding: 0.65rem 4.5rem 0.65rem 2.6rem;
+      font-family: var(--font-sans); font-size: 0.9375rem;
+      border: 1.5px solid var(--gray-300);
+      border-radius: var(--radius-pill);
+      background: var(--gray-50); color: var(--black);
+      transition: border-color var(--t), box-shadow var(--t), background var(--t);
+      outline: none;
+    }
+    #search:focus {
+      border-color: var(--crimson); background: var(--white);
+      box-shadow: 0 0 0 3px rgba(164,16,52,0.12);
+    }
+    #search::placeholder { color: var(--gray-500); }
+    .search-clear {
+      position: absolute; right: 0.75rem; top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      color: var(--gray-500); display: none; padding: 0.2rem 0.35rem;
+      font-size: 1rem; line-height: 1;
+      border-radius: var(--radius-sm);
+      transition: color var(--t), background var(--t);
+    }
+    .search-clear:hover { color: var(--crimson); background: var(--crimson-light); }
+    .search-clear.visible { display: block; }
+    .kbd-hint {
+      position: absolute; right: 2.4rem; top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.675rem; color: var(--gray-500);
+      background: var(--gray-100); border: 1px solid var(--gray-200);
+      border-radius: 3px; padding: 1px 5px;
+      pointer-events: none; white-space: nowrap;
+      font-family: var(--font-sans); letter-spacing: 0.02em;
+    }
+    .search-clear.visible ~ .kbd-hint { display: none; }
+    .header-sub {
+      font-size: 0.8rem; color: var(--gray-500); white-space: nowrap;
+      flex-shrink: 0; font-weight: 500; letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ─── QUICK BAR ──────────────────────────────────────────── */
+    .quick-bar {
+      background: var(--crimson);
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      scroll-snap-type: x mandatory;
+      overscroll-behavior-x: contain;
+    }
+    .quick-bar::-webkit-scrollbar { display: none; }
+    .quick-bar-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 0.5rem;
+      display: flex; min-width: max-content;
+    }
+    .quick-btn {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0.3rem;
+      padding: 0.8rem 1.35rem;
+      color: rgba(255,255,255,0.88);
+      text-decoration: none; border: none;
+      background: none; font-family: var(--font-sans);
+      transition: background var(--t), color var(--t), transform var(--t);
+      flex-shrink: 0; cursor: pointer;
+      scroll-snap-align: start;
+    }
+    .quick-btn:hover, .quick-btn:focus-visible {
+      background: var(--crimson-dark); color: var(--white);
+      transform: scale(1.05);
+      outline: none;
+    }
+    .quick-btn:focus-visible {
+      outline: 2px solid rgba(255,255,255,0.85); outline-offset: -2px;
+    }
+    .quick-icon { font-size: 1.5rem; line-height: 1; }
+    .quick-label {
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.045em; text-transform: uppercase; white-space: nowrap;
+    }
+
+    /* ─── INTRO BAND ─────────────────────────────────────────── */
+    .intro-band {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .intro-inner {
+      max-width: 1280px; margin: 0 auto;
+      padding: 1.25rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; flex-wrap: wrap;
+    }
+    .intro-text h1 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--black); line-height: 1.2;
+    }
+    .intro-text p {
+      font-size: 0.875rem; color: var(--gray-500); margin-top: 0.2rem;
+    }
+    .intro-meta {
+      font-size: 0.8rem; color: var(--gray-500);
+      display: flex; align-items: center; gap: 0.5rem;
+      white-space: nowrap;
+    }
+    .intro-meta strong { color: var(--gray-700); }
+    .today-pill {
+      background: var(--crimson-light); color: var(--crimson);
+      border-radius: var(--radius-pill); padding: 0.2rem 0.75rem;
+      font-size: 0.75rem; font-weight: 600; white-space: nowrap;
+    }
+
+    /* ─── MAIN ───────────────────────────────────────────────── */
+    main {
+      max-width: 1280px; margin: 0 auto;
+      padding: 1.75rem 1.5rem 5rem;
+    }
+
+    /* Search status */
+    #search-status {
+      font-size: 0.875rem; color: var(--gray-500);
+      margin-bottom: 1rem; min-height: 1.25rem; font-style: italic;
+    }
+
+    /* No results */
+    #no-results {
+      display: none; text-align: center;
+      padding: 3rem 1rem; color: var(--gray-500);
+    }
+    #no-results h3 {
+      font-family: var(--font-serif); font-size: 1.5rem;
+      margin-bottom: 0.5rem; color: var(--gray-700);
+    }
+
+    /* ─── CARD GRID ──────────────────────────────────────────── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.375rem;
+    }
+    /* Events card spans full width at bottom */
+    .card.card-events { grid-column: 1 / -1; }
+
+    /* ─── CARD ───────────────────────────────────────────────── */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: box-shadow var(--t), transform var(--t), opacity var(--t);
+      display: flex; flex-direction: column;
+      animation: cardIn 0.4s ease both;
+      will-change: transform, opacity;
+    }
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .card.hidden {
+      opacity: 0.15; pointer-events: none;
+      transform: none; box-shadow: none;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Card header */
+    .card-header {
+      background: var(--crimson); padding: 0.9rem 1.125rem;
+      display: flex; align-items: center; gap: 0.625rem;
+    }
+    .card-icon { font-size: 1.25rem; line-height: 1; flex-shrink: 0; }
+    .card-title {
+      font-family: var(--font-serif);
+      font-size: 1.0625rem; font-weight: 600;
+      color: var(--white); line-height: 1.2; flex: 1;
+    }
+    .card-toggle {
+      background: none; border: none;
+      color: rgba(255,255,255,0.75); cursor: pointer;
+      font-size: 1rem; padding: 0.15rem 0.25rem;
+      transition: color var(--t); display: none;
+      line-height: 1; border-radius: 2px;
+    }
+    .card-toggle:focus-visible { outline: 2px solid rgba(255,255,255,0.85); }
+
+    /* Emergency card */
+    .card.card-emergency .card-header { background: var(--emergency-red); }
+    .card.card-emergency .card-body { background: #FEF2F2; }
+    .card.card-emergency .card-link { color: #991B1B; }
+    .card.card-emergency .card-link.emerg-primary {
+      font-size: 1rem; font-weight: 700; color: var(--emergency-red);
+    }
+    .card.card-emergency .card-link.emerg-primary::before { content: "🚨 "; }
+
+    /* Events card */
+    .card.card-events .card-header { background: var(--gray-800); }
+    .card.card-events .card-body {
+      display: flex; align-items: stretch; gap: 1rem; flex-wrap: wrap;
+      padding: 1rem 1.125rem;
+    }
+    .event-stub {
+      flex: 1; min-width: 200px;
+      background: var(--gray-50); border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      padding: 0.875rem 1rem;
+      display: flex; flex-direction: column; gap: 0.3rem;
+    }
+    .event-stub .event-date {
+      font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--crimson);
+    }
+    .event-stub .event-title {
+      font-size: 0.875rem; font-weight: 500; color: var(--black);
+    }
+    .event-stub .event-meta {
+      font-size: 0.75rem; color: var(--gray-500);
+    }
+    .events-cta {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-size: 0.8rem; font-weight: 600; color: var(--gray-700);
+      text-decoration: none; padding: 0.75rem 1rem;
+      border-top: 1px solid var(--gray-200);
+      transition: color var(--t);
+    }
+    .events-cta:hover { color: var(--crimson); }
+
+    /* Card body */
+    .card-body { padding: 0.875rem 1.125rem 1rem; flex: 1; }
+    .card-body ul {
+      list-style: none; display: flex; flex-direction: column; gap: 1px;
+    }
+    .card-link {
+      display: flex; align-items: center; gap: 0.4rem;
+      color: var(--link-blue); text-decoration: none;
+      font-size: 0.9rem; font-weight: 400;
+      padding: 0.35rem 0.25rem;
+      border-radius: var(--radius-sm);
+      transition: color var(--t), transform var(--t);
+      width: 100%;
+    }
+    .card-link::before {
+      content: "›"; color: var(--gray-300);
+      transition: color var(--t); flex-shrink: 0;
+      font-size: 1.15rem; line-height: 1; width: 0.9rem; text-align: center;
+    }
+    .card-link:hover, .card-link:focus-visible {
+      color: var(--link-hover); transform: translateX(4px);
+      outline: none;
+    }
+    .card-link:hover::before { color: var(--crimson); }
+    .card-link:focus-visible {
+      outline: 2px solid var(--crimson); outline-offset: 1px;
+    }
+
+    /* Search highlight */
+    .card-link mark {
+      background: #FDE68A; color: var(--black);
+      border-radius: 2px; padding: 0 1px;
+      font-style: normal;
+    }
+
+    /* Card footer */
+    .card-footer {
+      padding: 0.5rem 1.125rem 0.875rem;
+      border-top: 1px solid var(--gray-200);
+    }
+    .card-all-link {
+      font-size: 0.8rem; color: var(--gray-700);
+      text-decoration: none; font-weight: 500;
+      transition: color var(--t);
+    }
+    .card-all-link:hover { color: var(--crimson); }
+
+    /* ─── EMERGENCY FLOATING WIDGET ──────────────────────────── */
+    #emergency-widget {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      z-index: 9999; display: flex; flex-direction: column;
+      align-items: flex-end; gap: 0.5rem;
+    }
+    #emergency-panel {
+      background: var(--white); border: 2px solid var(--emergency-red);
+      border-radius: var(--radius-lg); padding: 1rem 1.25rem;
+      box-shadow: var(--shadow-lg); display: none; min-width: 230px;
+    }
+    #emergency-panel.open { display: block; animation: popIn 0.18s ease; }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.9) translateY(10px); }
+      to   { opacity: 1; transform: none; }
+    }
+    #emergency-panel h4 {
+      font-family: var(--font-serif); font-size: 1rem;
+      color: var(--emergency-red); margin-bottom: 0.625rem;
+    }
+    #emergency-panel p {
+      font-size: 0.875rem; color: var(--gray-700);
+      margin-bottom: 0.375rem; font-weight: 500;
+    }
+    #emergency-panel a { color: var(--emergency-red); font-weight: 700; text-decoration: none; }
+    #emergency-panel a:hover { text-decoration: underline; }
+    #emergency-btn {
+      width: 52px; height: 52px; background: var(--emergency-red);
+      border: none; border-radius: 50%; cursor: pointer;
+      font-size: 1.375rem; box-shadow: var(--shadow-md);
+      transition: background var(--t), transform var(--t);
+      display: flex; align-items: center; justify-content: center;
+    }
+    #emergency-btn:hover { background: #B91C1C; transform: scale(1.08); }
+    #emergency-btn:focus-visible {
+      outline: 3px solid var(--emergency-red); outline-offset: 3px;
+    }
+
+    /* ─── ARIA LIVE ───────────────────────────────────────────── */
+    #live-region { position: absolute; left: -9999px; }
+
+    /* ─── FOOTER ──────────────────────────────────────────────── */
+    footer { background: var(--black); color: rgba(255,255,255,0.72); padding: 2.5rem 1.5rem; }
+    .footer-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem;
+    }
+    .logo-footer {
+      font-family: var(--font-serif); font-size: 1.2rem;
+      color: var(--white); display: block; margin-bottom: 0.5rem;
+    }
+    .footer-brand p { font-size: 0.8125rem; line-height: 1.65; }
+    footer h5 {
+      color: var(--white); font-size: 0.75rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.875rem;
+    }
+    footer ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+    footer li a {
+      color: rgba(255,255,255,0.6); text-decoration: none;
+      font-size: 0.8125rem; transition: color var(--t);
+    }
+    footer li a:hover { color: var(--white); }
+    .footer-emergency a { color: #FCA5A5 !important; font-weight: 600; }
+    .footer-emergency a:hover { color: #FEE2E2 !important; }
+    .footer-copy {
+      max-width: 1280px; margin: 1.5rem auto 0;
+      padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.75rem; color: rgba(255,255,255,0.35);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 0.5rem;
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 1023px) {
+      .card-grid { grid-template-columns: repeat(2, 1fr); }
+      .card.card-events { grid-column: 1 / -1; }
+    }
+    @media (max-width: 767px) {
+      .header-sub { display: none; }
+      .kbd-hint { display: none; }
+      .search-wrap { max-width: none; }
+      .quick-btn { padding: 0.7rem 1rem; }
+      .quick-label { font-size: 0.65rem; }
+      .intro-meta { display: none; }
+    }
+    @media (max-width: 639px) {
+      .card-grid { grid-template-columns: 1fr; }
+      .card.card-events { grid-column: 1; }
+      .card-toggle { display: block; }
+      .card-body.collapsed { display: none; }
+      .card-footer.collapsed { display: none; }
+      .footer-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+      .footer-copy { flex-direction: column; text-align: center; }
+      main { padding: 1.25rem 1rem 4rem; }
+      .intro-inner { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .intro-text h1 { font-size: 1.25rem; }
+    }
+
+    /* Stagger animation delays */
+    .card:nth-child(1) { animation-delay: 0.04s; }
+    .card:nth-child(2) { animation-delay: 0.09s; }
+    .card:nth-child(3) { animation-delay: 0.14s; }
+    .card:nth-child(4) { animation-delay: 0.19s; }
+    .card:nth-child(5) { animation-delay: 0.24s; }
+    .card:nth-child(6) { animation-delay: 0.29s; }
+    .card:nth-child(7) { animation-delay: 0.34s; }
+    .card:nth-child(8) { animation-delay: 0.39s; }
+    .card:nth-child(9) { animation-delay: 0.44s; }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div id="live-region" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ═══════════════════ HEADER ═══════════════════════════════ -->
+  <header role="banner">
+    <div class="header-inner">
+      <a href="#" class="logo" aria-label="HKS Compass — Home">HKS <span>◆ COMPASS</span></a>
+
+      <div class="search-wrap" role="search">
+        <svg class="search-icon-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <circle cx="8.5" cy="8.5" r="5.5"/>
+          <path d="M15 15l-3.5-3.5" stroke-linecap="round"/>
+        </svg>
+        <input
+          type="search" id="search" autocomplete="off" spellcheck="false"
+          placeholder="Search resources, tools, links…"
+          aria-label="Search all HKS resources"
+          aria-controls="card-grid"
+        />
+        <button class="search-clear" id="search-clear" aria-label="Clear search">×</button>
+        <span class="kbd-hint" aria-hidden="true">⌘K</span>
+      </div>
+
+      <p class="header-sub" aria-hidden="true">Harvard Kennedy School</p>
+    </div>
+  </header>
+
+  <!-- ═══════════════════ QUICK BAR ═════════════════════════════ -->
+  <nav class="quick-bar" aria-label="Quick access to essential tools">
+    <div class="quick-bar-inner">
+      <a href="https://canvas.harvard.edu" target="_blank" rel="noopener" class="quick-btn" aria-label="Canvas — Learning Management System">
+        <span class="quick-icon" aria-hidden="true">🎓</span>
+        <span class="quick-label">Canvas</span>
+      </a>
+      <a href="https://hks.joinhandshake.com" target="_blank" rel="noopener" class="quick-btn" aria-label="JACK — Career Management System">
+        <span class="quick-icon" aria-hidden="true">💼</span>
+        <span class="quick-label">JACK Career</span>
+      </a>
+      <a href="https://my.harvard.edu" target="_blank" rel="noopener" class="quick-btn" aria-label="My.Harvard — Course Registration">
+        <span class="quick-icon" aria-hidden="true">📋</span>
+        <span class="quick-label">My.Harvard</span>
+      </a>
+      <a href="https://hollis.harvard.edu" target="_blank" rel="noopener" class="quick-btn" aria-label="HOLLIS — Harvard Library Catalog">
+        <span class="quick-icon" aria-hidden="true">📚</span>
+        <span class="quick-label">Library</span>
+      </a>
+      <a href="https://outlook.office.com" target="_blank" rel="noopener" class="quick-btn" aria-label="Harvard Email — Outlook">
+        <span class="quick-icon" aria-hidden="true">📧</span>
+        <span class="quick-label">Email</span>
+      </a>
+      <a href="https://huit.harvard.edu/get-it-help" target="_blank" rel="noopener" class="quick-btn" aria-label="IT Support Help Desk">
+        <span class="quick-icon" aria-hidden="true">💻</span>
+        <span class="quick-label">IT Support</span>
+      </a>
+      <a href="https://huhs.harvard.edu" target="_blank" rel="noopener" class="quick-btn" aria-label="Harvard University Health Services">
+        <span class="quick-icon" aria-hidden="true">🏥</span>
+        <span class="quick-label">Health (HUHS)</span>
+      </a>
+      <a href="https://www.hks.harvard.edu/educational-programs/student-life/academic-calendar" target="_blank" rel="noopener" class="quick-btn" aria-label="Academic Calendar and Key Dates">
+        <span class="quick-icon" aria-hidden="true">📅</span>
+        <span class="quick-label">Calendar</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════ INTRO BAND ════════════════════════════ -->
+  <div class="intro-band">
+    <div class="intro-inner">
+      <div class="intro-text">
+        <h1>Your HKS Student Hub</h1>
+        <p>Everything you need — academics, career, finance, wellbeing, IT, and more.</p>
+      </div>
+      <div class="intro-meta">
+        <span class="today-pill" id="today-pill">April 2026</span>
+        <strong>Spring Semester</strong>
+        <span>|</span>
+        <a href="https://www.hks.harvard.edu/educational-programs/student-life/academic-calendar" target="_blank" rel="noopener" style="color:var(--crimson);font-weight:600;text-decoration:none;font-size:0.8rem;">View academic calendar →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ MAIN ══════════════════════════════════ -->
+  <main id="main-content">
+
+    <div id="search-status" role="status" aria-live="polite"></div>
+
+    <div id="no-results" role="alert">
+      <h3>No results found</h3>
+      <p>Try a different keyword, or
+        <button id="clear-search-btn" style="background:none;border:none;color:var(--crimson);cursor:pointer;font-size:inherit;font-weight:600;padding:0;text-decoration:underline;">
+          clear the search
+        </button>.
+      </p>
+    </div>
+
+    <div class="card-grid" id="card-grid">
+
+      <!-- ── A: ACADEMICS ──────────────────────────────────────────── -->
+      <article class="card" data-card="academics" aria-labelledby="h-academics">
+        <div class="card-header">
+          <span class="card-icon" aria-hidden="true">📖</span>
+          <h2 class="card-title" id="h-academics">Academics &amp; Learning</h2>
+          <button class="card-toggle" aria-expanded="true" aria-controls="body-academics" aria-label="Toggle Academics section">▾</button>
+        </div>
+        <div class="card-body" id="body-academics">
+          <ul>
+            <li><a href="https://canvas.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="canvas courses assignments grades lms learning">Canvas — Courses &amp; Grades</a></li>
+            <li><a href="https://my.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="my harvard registration add drop courses enrollment">My.Harvard — Registration</a></li>
+            <li><a href="https://www.hks.harvard.edu/educational-programs/course-catalog" target="_blank" rel="noopener" class="card-link" data-search="course catalog classes schedule browse">Course Catalog</a></li>
+            <li><a href="https://www.hks.harvard.edu/educational-programs/degree-programs" target="_blank" rel="noopener" class="card-link" data-search="degree requirements mpp mpa phd programs">Degree Requirements</a></li>
+            <li><a href="https://hollis.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="library hollis research books journals articles databases">Library &amp; HOLLIS</a></li>
+            <li><a href="https://www.hks.harvard.edu/educational-programs/student-life/academic-calendar" target="_blank" rel="noopener" class="card-link" data-search="academic calendar deadlines dates exams reading period finals">Academic Calendar &amp; Deadlines</a></li>
+            <li><a href="https://hub.hks.harvard.edu/student-and-academic-support" target="_blank" rel="noopener" class="card-link" data-search="advising advisor appointments meetings academic support help">Academic Advising</a></li>
+            <li><a href="https://writingcenter.fas.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="writing center tutoring help papers essays drafts">Writing Center &amp; Tutoring</a></li>
+          </ul>
+        </div>
+        <div class="card-footer" id="foot-academics">
+          <a href="https://hub.hks.harvard.edu/student-and-academic-support" target="_blank" rel="noopener" class="card-all-link">All academic resources →</a>
+        </div>
+      </article>
+
+      <!-- ── B: CAREER ─────────────────────────────────────────────── -->
+      <article class="card" data-card="career" aria-labelledby="h-career">
+        <div class="card-header">
+          <span class="card-icon" aria-hidden="true">💼</span>
+          <h2 class="card-title" id="h-career">Career &amp; Jobs</h2>
+          <button class="card-toggle" aria-expanded="true" aria-controls="body-career" aria-label="Toggle Career section">▾</button>
+        </div>
+        <div class="card-body" id="body-career">
+          <ul>
+            <li><a href="https://hks.joinhandshake.com" target="_blank" rel="noopener" class="card-link" data-search="jack career management system handshake jobs opportunities">JACK Career Management System</a></li>
+            <li><a href="https://hub.hks.harvard.edu/student-and-academic-support/career-resources/career-development-and-job-search-tools" target="_blank" rel="noopener" class="card-link" data-search="career development job search tools resources coaching">Career Development &amp; Job Search</a></li>
+            <li><a href="https://hub.hks.harvard.edu/student-and-academic-support/career-resources/job-boards-and-external-job-banks" target="_blank" rel="noopener" class="card-link" data-search="job boards external banks listings postings opportunities">Job Boards &amp; External Banks</a></li>
+            <li><a href="https://hub.hks.harvard.edu/student-and-academic-support/career-resources/internships-and-post-grad-fellowships" target="_blank" rel="noopener" class="card-link" data-search="internships fellowships post grad summer opportunities">Internships &amp; Fellowships</a></li>
+            <li><a href="https://hub.hks.harvard.edu/student-and-academic-support/career-resources/working-as-a-ta-at-hks" target="_blank" rel="noopener" class="card-link" data-search="teaching assistant ta work job paid">Working as a TA at HKS</a></li>
+            <li><a href="https://hub.hks.harvard.edu/student-and-academic-support/career-resources/headshot-hub" target="_blank" rel="noopener" class="card-link" data-search="headshot photo professional picture linkedin">Headshot Hub</a></li>
+            <li><a href="https://hub.hks.harvard.edu/student-and-academic-support/career-resources/hks-in-dc" target="_blank" rel="noopener" class="card-link" data-search="hks dc washington 2026 schedule events policy">HKS in D.C. 2026</a></li>
+            <li><a href="https://hub.hks.harvard.edu/student-and-academic-support/career-resources/state-and-local-government-career-expo" target="_blank" rel="noopener" class="card-link" data-search="state local government career expo fair">State &amp; Local Gov Career Expo</a></li>
+            <li><a href="https://hub.hks.harvard.edu/student-and-academic-support/career-resources/oca-video-library" target="_blank" rel="noopener" class="card-link" data-search="oca video library career office resources watch">OCA Video Library</a></li>
+            <li><a href="https://hub.hks.harvard.edu/student-and-academic-support/career-resources/oca-contact-about-us" target="_blank" rel="noopener" class="card-link" data-search="oca contact about career office advancement">OCA Contact &amp; About</a></li>
+          </ul>
+        </div>
+        <div class="card-footer" id="foot-career">
+          <a href="https://hub.hks.harvard.edu/student-and-academic-support/career-resources" target="_blank" rel="noopener" class="card-all-link">All career resources →</a>
+        </div>
+      </article>
+
+      <!-- ── C: FINANCE ────────────────────────────────────────────── -->
+      <article class="card" data-card="finance" aria-labelledby="h-finance">
+        <div class="card-header">
+          <span class="card-icon" aria-hidden="true">💰</span>
+          <h2 class="card-title" id="h-finance">Finance &amp; Aid</h2>
+          <button class="card-toggle" aria-expanded="true" aria-controls="body-finance" aria-label="Toggle Finance section">▾</button>
+        </div>
+        <div class="card-body" id="body-finance">
+          <ul>
+            <li><a href="https://hub.hks.harvard.edu/student-and-academic-support/financial-resources-and-aid-information" target="_blank" rel="noopener" class="card-link" data-search="financial aid information resources funding grant">Financial Aid Information</a></li>
+            <li><a href="https://studentbilling.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="student billing bursar payment tuition bill invoice">Student Billing &amp; Bursar</a></li>
+            <li><a href="https://www.hks.harvard.edu/admissions-aid/financial-aid/tuition-fees" target="_blank" rel="noopener" class="card-link" data-search="tuition fees cost schedule pricing amount">Tuition &amp; Fees Schedule</a></li>
+            <li><a href="https://www.hks.harvard.edu/admissions-aid/financial-aid/scholarships-grants" target="_blank" rel="noopener" class="card-link" data-search="scholarships grants fellowships funding money award">Scholarships &amp; Grants</a></li>
+            <li><a href="https://www.hks.harvard.edu/admissions-aid/financial-aid/emergency-student-funds" target="_blank" rel="noopener" class="card-link" data-search="emergency funds student financial crisis help urgent money">Emergency Student Funds</a></li>
+            <li><a href="https://studentbilling.harvard.edu/tax-information" target="_blank" rel="noopener" class="card-link" data-search="tax documents 1098-T forms IRS">Tax Documents</a></li>
+          </ul>
+        </div>
+        <div class="card-footer" id="foot-finance">
+          <a href="https://hub.hks.harvard.edu/student-and-academic-support/financial-resources-and-aid-information" target="_blank" rel="noopener" class="card-all-link">All financial resources →</a>
+        </div>
+      </article>
+
+      <!-- ── D: STUDENT LIFE ───────────────────────────────────────── -->
+      <article class="card" data-card="life" aria-labelledby="h-life">
+        <div class="card-header">
+          <span class="card-icon" aria-hidden="true">🌱</span>
+          <h2 class="card-title" id="h-life">Student Life &amp; Wellbeing</h2>
+          <button class="card-toggle" aria-expanded="true" aria-controls="body-life" aria-label="Toggle Student Life section">▾</button>
+        </div>
+        <div class="card-body" id="body-life">
+          <ul>
+            <li><a href="https://huhs.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="health services huhs medical doctor appointments sick">Health Services (HUHS)</a></li>
+            <li><a href="https://camhs.huhs.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="counseling mental health camhs therapy support psychiatry">Counseling &amp; Mental Health (CAMHS)</a></li>
+            <li><a href="https://hub.hks.harvard.edu/student-and-academic-support/student-services" target="_blank" rel="noopener" class="card-link" data-search="housing dining accommodation food meal residence">Housing &amp; Dining</a></li>
+            <li><a href="https://www.hks.harvard.edu/student-organizations" target="_blank" rel="noopener" class="card-link" data-search="student organizations clubs groups activities extracurricular">Student Organizations &amp; Clubs</a></li>
+            <li><a href="https://athletics.harvard.edu/facilities/mac" target="_blank" rel="noopener" class="card-link" data-search="recreation athletics gym mac fitness sports wellness">Recreation &amp; Athletics (MAC)</a></li>
+            <li><a href="https://ois.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="international students OIS visa work authorization CPT OPT">International Student Support</a></li>
+            <li><a href="https://aeo.fas.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="disability services accessibility accommodations AEO">Disability Services &amp; Accommodations</a></li>
+            <li><a href="https://hr.harvard.edu/childcare" target="_blank" rel="noopener" class="card-link" data-search="child care daycare childcare family parenting">Child Care Resources</a></li>
+          </ul>
+        </div>
+        <div class="card-footer" id="foot-life">
+          <a href="https://hub.hks.harvard.edu/student-and-academic-support/student-services" target="_blank" rel="noopener" class="card-all-link">All student services →</a>
+        </div>
+      </article>
+
+      <!-- ── E: TECHNOLOGY ─────────────────────────────────────────── -->
+      <article class="card" data-card="tech" aria-labelledby="h-tech">
+        <div class="card-header">
+          <span class="card-icon" aria-hidden="true">💻</span>
+          <h2 class="card-title" id="h-tech">Technology &amp; IT</h2>
+          <button class="card-toggle" aria-expanded="true" aria-controls="body-tech" aria-label="Toggle Technology section">▾</button>
+        </div>
+        <div class="card-body" id="body-tech">
+          <ul>
+            <li><a href="https://huit.harvard.edu/get-it-help" target="_blank" rel="noopener" class="card-link" data-search="it help desk support ticket computer technology fix">IT Help Desk</a></li>
+            <li><a href="https://software.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="software licensing download microsoft office adobe photoshop">Software &amp; Licensing</a></li>
+            <li><a href="https://key.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="harvardkey mfa two factor authentication login password account">HarvardKey &amp; MFA</a></li>
+            <li><a href="https://huit.harvard.edu/vpn" target="_blank" rel="noopener" class="card-link" data-search="vpn remote access connect off campus network secure">VPN &amp; Remote Access</a></li>
+            <li><a href="https://huit.harvard.edu/printing" target="_blank" rel="noopener" class="card-link" data-search="printing scanning copy print documents paper">Printing &amp; Scanning</a></li>
+            <li><a href="https://huit.harvard.edu/zoom" target="_blank" rel="noopener" class="card-link" data-search="zoom video conferencing meetings virtual setup webinar">Zoom &amp; Video Conferencing</a></li>
+            <li><a href="https://huit.harvard.edu/wireless" target="_blank" rel="noopener" class="card-link" data-search="wifi wireless internet hks network setup connect">HKS WiFi Setup</a></li>
+            <li><a href="https://huit.harvard.edu/storage" target="_blank" rel="noopener" class="card-link" data-search="storage cloud data files google drive onedrive backup">Data Storage &amp; Cloud</a></li>
+          </ul>
+        </div>
+        <div class="card-footer" id="foot-tech">
+          <a href="https://huit.harvard.edu" target="_blank" rel="noopener" class="card-all-link">All IT resources →</a>
+        </div>
+      </article>
+
+      <!-- ── F: CAMPUS & COMMUNITY ─────────────────────────────────── -->
+      <article class="card" data-card="community" aria-labelledby="h-community">
+        <div class="card-header">
+          <span class="card-icon" aria-hidden="true">🏛️</span>
+          <h2 class="card-title" id="h-community">Campus &amp; Community</h2>
+          <button class="card-toggle" aria-expanded="true" aria-controls="body-community" aria-label="Toggle Community section">▾</button>
+        </div>
+        <div class="card-body" id="body-community">
+          <ul>
+            <li><a href="https://www.hks.harvard.edu/events" target="_blank" rel="noopener" class="card-link" data-search="events calendar upcoming lectures talks seminars">Events Calendar</a></li>
+            <li><a href="https://www.hks.harvard.edu/student-government" target="_blank" rel="noopener" class="card-link" data-search="student government sga association council representatives">Student Government (SGA)</a></li>
+            <li><a href="https://www.hks.harvard.edu/educational-programs/student-life/diversity-inclusion" target="_blank" rel="noopener" class="card-link" data-search="diversity inclusion equity belonging DEI community race gender">Diversity &amp; Inclusion</a></li>
+            <li><a href="https://alumni.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="alumni network connections networking graduates mentorship">Alumni Network</a></li>
+            <li><a href="https://map.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="campus map directions buildings locations find">Campus Map &amp; Directions</a></li>
+            <li><a href="https://hub.hks.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="announcements news community hub bulletin board updates">Community Announcements</a></li>
+          </ul>
+        </div>
+        <div class="card-footer" id="foot-community">
+          <a href="https://hub.hks.harvard.edu" target="_blank" rel="noopener" class="card-all-link">All community resources →</a>
+        </div>
+      </article>
+
+      <!-- ── G: ADMINISTRATIVE ─────────────────────────────────────── -->
+      <article class="card" data-card="admin" aria-labelledby="h-admin">
+        <div class="card-header">
+          <span class="card-icon" aria-hidden="true">🗂️</span>
+          <h2 class="card-title" id="h-admin">Administrative</h2>
+          <button class="card-toggle" aria-expanded="true" aria-controls="body-admin" aria-label="Toggle Administrative section">▾</button>
+        </div>
+        <div class="card-body" id="body-admin">
+          <ul>
+            <li><a href="https://hub.hks.harvard.edu/student-and-academic-support/student-services" target="_blank" rel="noopener" class="card-link" data-search="student services office administration support general">Student Services Office</a></li>
+            <li><a href="https://registrar.fas.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="registrar transcript enrollment verification records diploma">Registrar</a></li>
+            <li><a href="https://huid.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="id card huid access building entry badge">ID Cards &amp; Access</a></li>
+            <li><a href="https://www.transportation.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="parking transportation transit commute shuttle bus mbta">Parking &amp; Transportation</a></li>
+            <li><a href="https://hub.hks.harvard.edu/forms" target="_blank" rel="noopener" class="card-link" data-search="forms documents paperwork requests official leave">Forms &amp; Documents Library</a></li>
+            <li><a href="https://titleix.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="title ix sexual harassment discrimination report safety">Title IX &amp; Sexual Harassment</a></li>
+            <li><a href="https://ombudsman.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="ombudsman conflict resolution dispute grievance neutral confidential">Ombudsman</a></li>
+          </ul>
+        </div>
+        <div class="card-footer" id="foot-admin">
+          <a href="https://hub.hks.harvard.edu/student-and-academic-support" target="_blank" rel="noopener" class="card-all-link">All administrative resources →</a>
+        </div>
+      </article>
+
+      <!-- ── H: EMERGENCY ──────────────────────────────────────────── -->
+      <article class="card card-emergency" data-card="emergency" aria-labelledby="h-emergency">
+        <div class="card-header">
+          <span class="card-icon" aria-hidden="true">🚨</span>
+          <h2 class="card-title" id="h-emergency">Help &amp; Emergency</h2>
+          <button class="card-toggle" aria-expanded="true" aria-controls="body-emergency" aria-label="Toggle Emergency section">▾</button>
+        </div>
+        <div class="card-body" id="body-emergency">
+          <ul>
+            <li><a href="tel:6174951330" class="card-link emerg-primary" data-search="emergency number call phone 911 urgent crisis">Emergency: 617-495-1330</a></li>
+            <li><a href="tel:6174951212" class="card-link" data-search="campus police security safety crime report">Campus Police: 617-495-1212</a></li>
+            <li><a href="https://camhs.huhs.harvard.edu/urgent-care" target="_blank" rel="noopener" class="card-link" data-search="mental health crisis urgent care hotline counseling emergency support">Mental Health Crisis Line</a></li>
+            <li><a href="https://hub.hks.harvard.edu/student-and-academic-support/student-services" target="_blank" rel="noopener" class="card-link" data-search="student support navigator help find assistance guidance">Student Support Navigator</a></li>
+            <li><a href="https://titleix.harvard.edu/report" target="_blank" rel="noopener" class="card-link" data-search="report incident complaint bias harassment discrimination form">Report an Incident</a></li>
+            <li><a href="https://hub.hks.harvard.edu/feedback" target="_blank" rel="noopener" class="card-link" data-search="feedback suggestions improve site hub comments ideas">Feedback &amp; Suggestions</a></li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ── I: EVENTS STUB ────────────────────────────────────────── -->
+      <article class="card card-events" data-card="events" aria-labelledby="h-events">
+        <div class="card-header">
+          <span class="card-icon" aria-hidden="true">🗓️</span>
+          <h2 class="card-title" id="h-events">Upcoming Events &amp; Deadlines</h2>
+          <button class="card-toggle" aria-expanded="true" aria-controls="body-events" aria-label="Toggle Events section">▾</button>
+        </div>
+        <div class="card-body" id="body-events">
+          <div class="event-stub">
+            <span class="event-date">Apr 28, 2026</span>
+            <span class="event-title">Spring Career Fair — Isgur Atrium</span>
+            <span class="event-meta">10:00 AM – 3:00 PM · In-Person</span>
+          </div>
+          <div class="event-stub">
+            <span class="event-date">May 2, 2026</span>
+            <span class="event-title">Reading Period Begins</span>
+            <span class="event-meta">No classes — study resources available</span>
+          </div>
+          <div class="event-stub">
+            <span class="event-date">May 5–12, 2026</span>
+            <span class="event-title">Final Examinations</span>
+            <span class="event-meta">Check My.Harvard for your schedule</span>
+          </div>
+          <div class="event-stub">
+            <span class="event-date">May 29, 2026</span>
+            <span class="event-title">HKS Commencement</span>
+            <span class="event-meta">Tercentenary Theatre · Cambridge, MA</span>
+          </div>
+          <div class="event-stub">
+            <span class="event-date">Jun 1, 2026</span>
+            <span class="event-title">Financial Aid Application Deadline</span>
+            <span class="event-meta">Submit via Student Aid Portal</span>
+          </div>
+        </div>
+        <a href="https://www.hks.harvard.edu/events" target="_blank" rel="noopener" class="events-cta">
+          View full HKS Events Calendar →
+        </a>
+      </article>
+
+    </div><!-- /card-grid -->
+  </main>
+
+  <!-- ═══════════════════ EMERGENCY WIDGET ═════════════════════ -->
+  <div id="emergency-widget" aria-label="Emergency contacts quick access">
+    <div id="emergency-panel" role="dialog" aria-label="Emergency contacts" aria-modal="false">
+      <h4>🚨 Emergency Contacts</h4>
+      <p>Emergency Line: <a href="tel:6174951330">617-495-1330</a></p>
+      <p>Campus Police: <a href="tel:6174951212">617-495-1212</a></p>
+      <p>Mental Health: <a href="https://camhs.huhs.harvard.edu" target="_blank" rel="noopener">CAMHS Urgent Care</a></p>
+    </div>
+    <button id="emergency-btn" aria-label="Show emergency contacts" aria-expanded="false">🚨</button>
+  </div>
+
+  <!-- ═══════════════════ FOOTER ════════════════════════════════ -->
+  <footer role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="logo-footer">HKS ◆ COMPASS</span>
+        <p>Your all-in-one navigation hub for Harvard Kennedy School student resources, tools, and services. Everything you need — one place, two clicks away.</p>
+      </div>
+      <div>
+        <h5>Quick Access</h5>
+        <ul>
+          <li><a href="https://canvas.harvard.edu" target="_blank" rel="noopener">Canvas LMS</a></li>
+          <li><a href="https://my.harvard.edu" target="_blank" rel="noopener">My.Harvard</a></li>
+          <li><a href="https://hollis.harvard.edu" target="_blank" rel="noopener">Library (HOLLIS)</a></li>
+          <li><a href="https://hks.joinhandshake.com" target="_blank" rel="noopener">JACK Career</a></li>
+          <li><a href="https://hub.hks.harvard.edu" target="_blank" rel="noopener">HKS Hub</a></li>
+        </ul>
+      </div>
+      <div class="footer-emergency">
+        <h5>Emergency</h5>
+        <ul>
+          <li><a href="tel:6174951330">Emergency: 617-495-1330</a></li>
+          <li><a href="tel:6174951212">Campus Police: 617-495-1212</a></li>
+          <li><a href="https://camhs.huhs.harvard.edu/urgent-care" target="_blank" rel="noopener">Mental Health Crisis</a></li>
+          <li><a href="https://huhs.harvard.edu" target="_blank" rel="noopener">Health Services (HUHS)</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-copy">
+      <span>© 2026 The President and Fellows of Harvard College — Harvard Kennedy School</span>
+      <span>Built by the Office of the CIO &amp; Student Experience Team</span>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════ JAVASCRIPT ════════════════════════════ -->
+  <script>
+  (function () {
+    'use strict';
+
+    // ── Live date pill ────────────────────────────────────────────
+    (function () {
+      const pill = document.getElementById('today-pill');
+      if (pill) {
+        const now = new Date();
+        pill.textContent = now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      }
+    })();
+
+    // ── Search ────────────────────────────────────────────────────
+    const searchInput  = document.getElementById('search');
+    const searchClear  = document.getElementById('search-clear');
+    const searchStatus = document.getElementById('search-status');
+    const noResults    = document.getElementById('no-results');
+    const clearBtn     = document.getElementById('clear-search-btn');
+    const liveRegion   = document.getElementById('live-region');
+    const cards        = Array.from(document.querySelectorAll('.card'));
+    const allLinks     = Array.from(document.querySelectorAll('.card-link'));
+
+    // Index event stubs for search — give the events card a text corpus
+    (function indexEventStubs() {
+      const eventsCard = document.querySelector('[data-card="events"]');
+      if (!eventsCard) return;
+      const stubs = Array.from(eventsCard.querySelectorAll('.event-stub'));
+      const corpus = stubs.map(s => s.textContent.trim().toLowerCase()).join(' ');
+      eventsCard.setAttribute('data-event-corpus', corpus);
+    })();
+
+    // Store original text content (plain) + innerHTML for display separately
+    allLinks.forEach(link => {
+      link.setAttribute('data-plain-text', link.textContent.trim());
+      link.setAttribute('data-orig-html', link.innerHTML);
+    });
+
+    function escRe(s) {
+      return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    // Highlight by replacing inside plain text, then safely reconstructing
+    function highlightText(plainText, query) {
+      if (!query) return plainText;
+      const re = new RegExp(`(${escRe(query)})`, 'gi');
+      return plainText.replace(re, '<mark>$1</mark>');
+    }
+
+    function resetLinks() {
+      allLinks.forEach(link => {
+        link.innerHTML = link.getAttribute('data-orig-html');
+      });
+    }
+
+    function runSearch(rawQuery) {
+      const q = rawQuery.trim().toLowerCase();
+
+      if (!q) {
+        cards.forEach(c => c.classList.remove('hidden'));
+        resetLinks();
+        noResults.style.display = 'none';
+        searchStatus.textContent = '';
+        liveRegion.textContent = '';
+        return;
+      }
+
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const heading = card.querySelector('.card-title');
+        const titleText = heading ? heading.textContent.toLowerCase() : '';
+        const eventCorpus = (card.getAttribute('data-event-corpus') || '').toLowerCase();
+        const links = Array.from(card.querySelectorAll('.card-link'));
+        let cardMatches = titleText.includes(q) || eventCorpus.includes(q);
+
+        links.forEach(link => {
+          const searchData = (link.getAttribute('data-search') || '').toLowerCase();
+          const plainText  = (link.getAttribute('data-plain-text') || '').toLowerCase();
+          const matches    = plainText.includes(q) || searchData.includes(q);
+
+          if (matches) {
+            cardMatches = true;
+            // Rebuild display: highlight inside plain text (safe — no HTML entities corrupted)
+            const origPlain = link.getAttribute('data-plain-text');
+            link.innerHTML = highlightText(origPlain, rawQuery.trim());
+          } else {
+            link.innerHTML = link.getAttribute('data-orig-html');
+          }
+        });
+
+        if (cardMatches) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+          links.forEach(l => { l.innerHTML = l.getAttribute('data-orig-html'); });
+        }
+      });
+
+      if (visibleCount === 0) {
+        noResults.style.display = 'block';
+        noResults.querySelector('h3').textContent = `No results for "${rawQuery.trim()}"`;
+        searchStatus.textContent = '';
+        liveRegion.textContent = `No results found for ${rawQuery.trim()}`;
+      } else {
+        noResults.style.display = 'none';
+        const msg = `Showing ${visibleCount} section${visibleCount !== 1 ? 's' : ''} for "${rawQuery.trim()}"`;
+        searchStatus.textContent = msg;
+        liveRegion.textContent = msg;
+      }
+    }
+
+    searchInput.addEventListener('input', function () {
+      searchClear.classList.toggle('visible', this.value.length > 0);
+      runSearch(this.value);
+    });
+
+    function clearSearch() {
+      searchInput.value = '';
+      searchClear.classList.remove('visible');
+      runSearch('');
+      searchInput.focus();
+    }
+
+    searchClear.addEventListener('click', clearSearch);
+    if (clearBtn) clearBtn.addEventListener('click', clearSearch);
+
+    document.addEventListener('keydown', function (e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      }
+      if (e.key === 'Escape') {
+        if (searchInput.value) { clearSearch(); return; }
+        if (emergencyPanel.classList.contains('open')) {
+          closeEmergency();
+          emergencyBtn.focus();
+        }
+      }
+    });
+
+    // ── Mobile Accordion ──────────────────────────────────────────
+    const toggleBtns = Array.from(document.querySelectorAll('.card-toggle'));
+
+    function isMobile() { return window.innerWidth < 640; }
+
+    function setupAccordions() {
+      toggleBtns.forEach(btn => {
+        const card   = btn.closest('.card');
+        const bodyId = btn.getAttribute('aria-controls');
+        const body   = bodyId ? document.getElementById(bodyId) : card.querySelector('.card-body');
+        const footId = bodyId ? bodyId.replace('body-', 'foot-') : null;
+        const foot   = footId ? document.getElementById(footId) : card.querySelector('.card-footer');
+
+        if (isMobile()) {
+          btn.style.display = 'block';
+        } else {
+          btn.style.display = 'none';
+          // Ensure expanded on desktop
+          if (body)  { body.classList.remove('collapsed'); }
+          if (foot)  { foot.classList.remove('collapsed'); }
+          btn.setAttribute('aria-expanded', 'true');
+          btn.textContent = '▾';
+        }
+      });
+    }
+
+    toggleBtns.forEach(btn => {
+      const card   = btn.closest('.card');
+      const bodyId = btn.getAttribute('aria-controls');
+      const body   = bodyId ? document.getElementById(bodyId) : card.querySelector('.card-body');
+      const footId = bodyId ? bodyId.replace('body-', 'foot-') : null;
+      const foot   = footId ? document.getElementById(footId) : card.querySelector('.card-footer');
+      const header = card.querySelector('.card-header');
+
+      function doToggle() {
+        if (!isMobile()) return;
+        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!isExpanded));
+        btn.textContent = isExpanded ? '▸' : '▾';
+        if (body) body.classList.toggle('collapsed', isExpanded);
+        if (foot) foot.classList.toggle('collapsed', isExpanded);
+      }
+
+      header.addEventListener('click', function () { if (isMobile()) doToggle(); });
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (isMobile()) doToggle();
+      });
+    });
+
+    setupAccordions();
+    let resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(setupAccordions, 120);
+    });
+
+    // ── Emergency Widget ──────────────────────────────────────────
+    const emergencyBtn   = document.getElementById('emergency-btn');
+    const emergencyPanel = document.getElementById('emergency-panel');
+
+    function closeEmergency() {
+      emergencyPanel.classList.remove('open');
+      emergencyBtn.setAttribute('aria-expanded', 'false');
+      emergencyBtn.textContent = '🚨';
+    }
+
+    emergencyBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const isOpen = emergencyPanel.classList.toggle('open');
+      emergencyBtn.setAttribute('aria-expanded', String(isOpen));
+      emergencyBtn.textContent = isOpen ? '✕' : '🚨';
+      if (isOpen) {
+        // Move focus inside panel for screen reader users
+        const firstFocusable = emergencyPanel.querySelector('a, button');
+        if (firstFocusable) setTimeout(() => firstFocusable.focus(), 50);
+      }
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('#emergency-widget')) closeEmergency();
+    });
+
+  })();
+  </script>
+</body>
+</html>
