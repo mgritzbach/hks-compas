@@ -225,8 +225,6 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 1.375rem;
     }
-    /* Events card spans full width at bottom */
-    .card.card-events { grid-column: 1 / -1; }
 
     /* ─── CARD ───────────────────────────────────────────────── */
     .card {
@@ -281,37 +279,6 @@
     }
     .card.card-emergency .card-link.emerg-primary::before { content: "🚨 "; }
 
-    /* Events card */
-    .card.card-events .card-header { background: var(--gray-800); }
-    .card.card-events .card-body {
-      display: flex; align-items: stretch; gap: 1rem; flex-wrap: wrap;
-      padding: 1rem 1.125rem;
-    }
-    .event-stub {
-      flex: 1; min-width: 200px;
-      background: var(--gray-50); border: 1px solid var(--gray-200);
-      border-radius: var(--radius-md);
-      padding: 0.875rem 1rem;
-      display: flex; flex-direction: column; gap: 0.3rem;
-    }
-    .event-stub .event-date {
-      font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.05em; color: var(--crimson);
-    }
-    .event-stub .event-title {
-      font-size: 0.875rem; font-weight: 500; color: var(--black);
-    }
-    .event-stub .event-meta {
-      font-size: 0.75rem; color: var(--gray-500);
-    }
-    .events-cta {
-      display: inline-flex; align-items: center; gap: 0.35rem;
-      font-size: 0.8rem; font-weight: 600; color: var(--gray-700);
-      text-decoration: none; padding: 0.75rem 1rem;
-      border-top: 1px solid var(--gray-200);
-      transition: color var(--t);
-    }
-    .events-cta:hover { color: var(--crimson); }
 
     /* Card body */
     .card-body { padding: 0.875rem 1.125rem 1rem; flex: 1; }
@@ -435,7 +402,6 @@
     /* ─── RESPONSIVE ─────────────────────────────────────────── */
     @media (max-width: 1023px) {
       .card-grid { grid-template-columns: repeat(2, 1fr); }
-      .card.card-events { grid-column: 1 / -1; }
     }
     @media (max-width: 767px) {
       .header-sub { display: none; }
@@ -447,7 +413,6 @@
     }
     @media (max-width: 639px) {
       .card-grid { grid-template-columns: 1fr; }
-      .card.card-events { grid-column: 1; }
       .card-toggle { display: block; }
       .card-body.collapsed { display: none; }
       .card-footer.collapsed { display: none; }
@@ -467,7 +432,6 @@
     .card:nth-child(6) { animation-delay: 0.29s; }
     .card:nth-child(7) { animation-delay: 0.34s; }
     .card:nth-child(8) { animation-delay: 0.39s; }
-    .card:nth-child(9) { animation-delay: 0.44s; }
   </style>
 </head>
 <body>
@@ -530,7 +494,7 @@
         <span class="quick-icon" aria-hidden="true">🏥</span>
         <span class="quick-label">Health (HUHS)</span>
       </a>
-      <a href="https://www.hks.harvard.edu/educational-programs/student-life/academic-calendar" target="_blank" rel="noopener" class="quick-btn" aria-label="Academic Calendar and Key Dates">
+      <a href="https://www.hks.harvard.edu/educational-programs/academic-calendars-policies/current-academic-calendar" target="_blank" rel="noopener" class="quick-btn" aria-label="Academic Calendar and Key Dates">
         <span class="quick-icon" aria-hidden="true">📅</span>
         <span class="quick-label">Calendar</span>
       </a>
@@ -546,9 +510,9 @@
       </div>
       <div class="intro-meta">
         <span class="today-pill" id="today-pill">April 2026</span>
-        <strong>Spring Semester</strong>
+        <strong id="semester-label">Spring Semester</strong>
         <span>|</span>
-        <a href="https://www.hks.harvard.edu/educational-programs/student-life/academic-calendar" target="_blank" rel="noopener" style="color:var(--crimson);font-weight:600;text-decoration:none;font-size:0.8rem;">View academic calendar →</a>
+        <a href="https://www.hks.harvard.edu/educational-programs/academic-calendars-policies/current-academic-calendar" target="_blank" rel="noopener" style="color:var(--crimson);font-weight:600;text-decoration:none;font-size:0.8rem;">View academic calendar →</a>
       </div>
     </div>
   </div>
@@ -583,7 +547,7 @@
             <li><a href="https://www.hks.harvard.edu/educational-programs/course-catalog" target="_blank" rel="noopener" class="card-link" data-search="course catalog classes schedule browse">Course Catalog</a></li>
             <li><a href="https://www.hks.harvard.edu/educational-programs/degree-programs" target="_blank" rel="noopener" class="card-link" data-search="degree requirements mpp mpa phd programs">Degree Requirements</a></li>
             <li><a href="https://hollis.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="library hollis research books journals articles databases">Library &amp; HOLLIS</a></li>
-            <li><a href="https://www.hks.harvard.edu/educational-programs/student-life/academic-calendar" target="_blank" rel="noopener" class="card-link" data-search="academic calendar deadlines dates exams reading period finals">Academic Calendar &amp; Deadlines</a></li>
+            <li><a href="https://www.hks.harvard.edu/educational-programs/academic-calendars-policies/current-academic-calendar" target="_blank" rel="noopener" class="card-link" data-search="academic calendar deadlines dates exams reading period finals">Academic Calendar &amp; Deadlines</a></li>
             <li><a href="https://hub.hks.harvard.edu/student-and-academic-support" target="_blank" rel="noopener" class="card-link" data-search="advising advisor appointments meetings academic support help">Academic Advising</a></li>
             <li><a href="https://writingcenter.fas.harvard.edu" target="_blank" rel="noopener" class="card-link" data-search="writing center tutoring help papers essays drafts">Writing Center &amp; Tutoring</a></li>
           </ul>
@@ -753,45 +717,6 @@
         </div>
       </article>
 
-      <!-- ── I: EVENTS STUB ────────────────────────────────────────── -->
-      <article class="card card-events" data-card="events" aria-labelledby="h-events">
-        <div class="card-header">
-          <span class="card-icon" aria-hidden="true">🗓️</span>
-          <h2 class="card-title" id="h-events">Upcoming Events &amp; Deadlines</h2>
-          <button class="card-toggle" aria-expanded="true" aria-controls="body-events" aria-label="Toggle Events section">▾</button>
-        </div>
-        <div class="card-body" id="body-events">
-          <div class="event-stub">
-            <span class="event-date">Apr 28, 2026</span>
-            <span class="event-title">Spring Career Fair — Isgur Atrium</span>
-            <span class="event-meta">10:00 AM – 3:00 PM · In-Person</span>
-          </div>
-          <div class="event-stub">
-            <span class="event-date">May 2, 2026</span>
-            <span class="event-title">Reading Period Begins</span>
-            <span class="event-meta">No classes — study resources available</span>
-          </div>
-          <div class="event-stub">
-            <span class="event-date">May 5–12, 2026</span>
-            <span class="event-title">Final Examinations</span>
-            <span class="event-meta">Check My.Harvard for your schedule</span>
-          </div>
-          <div class="event-stub">
-            <span class="event-date">May 29, 2026</span>
-            <span class="event-title">HKS Commencement</span>
-            <span class="event-meta">Tercentenary Theatre · Cambridge, MA</span>
-          </div>
-          <div class="event-stub">
-            <span class="event-date">Jun 1, 2026</span>
-            <span class="event-title">Financial Aid Application Deadline</span>
-            <span class="event-meta">Submit via Student Aid Portal</span>
-          </div>
-        </div>
-        <a href="https://www.hks.harvard.edu/events" target="_blank" rel="noopener" class="events-cta">
-          View full HKS Events Calendar →
-        </a>
-      </article>
-
     </div><!-- /card-grid -->
   </main>
 
@@ -847,9 +772,17 @@
     // ── Live date pill ────────────────────────────────────────────
     (function () {
       const pill = document.getElementById('today-pill');
+      const semLabel = document.getElementById('semester-label');
       if (pill) {
         const now = new Date();
         pill.textContent = now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        if (semLabel) {
+          const m = now.getMonth(); // 0=Jan
+          semLabel.textContent =
+            m >= 0 && m <= 4  ? 'Spring Semester' :
+            m >= 5 && m <= 7  ? 'Summer Session'  :
+                                'Fall Semester';
+        }
       }
     })();
 
@@ -862,15 +795,6 @@
     const liveRegion   = document.getElementById('live-region');
     const cards        = Array.from(document.querySelectorAll('.card'));
     const allLinks     = Array.from(document.querySelectorAll('.card-link'));
-
-    // Index event stubs for search — give the events card a text corpus
-    (function indexEventStubs() {
-      const eventsCard = document.querySelector('[data-card="events"]');
-      if (!eventsCard) return;
-      const stubs = Array.from(eventsCard.querySelectorAll('.event-stub'));
-      const corpus = stubs.map(s => s.textContent.trim().toLowerCase()).join(' ');
-      eventsCard.setAttribute('data-event-corpus', corpus);
-    })();
 
     // Store original text content (plain) + innerHTML for display separately
     allLinks.forEach(link => {
