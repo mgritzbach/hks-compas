@@ -1653,7 +1653,8 @@
         if (card) card.classList.remove('hidden');
         entry.link.scrollIntoView({ behavior: 'smooth', block: 'center' });
         highlightSelection(entry.link);
-        entry.link.focus();
+        // Navigate to the link — this is what the user expects when selecting a result
+        entry.link.click();
       }
 
       function renderDropdown(items) {
@@ -1672,6 +1673,9 @@
             activeIndex = idx;
             renderDropdown(results);
           });
+          // Use mousedown + preventDefault so the suggestion is captured before
+          // the search input's blur event can fire and destroy the dropdown.
+          btn.addEventListener('mousedown', function (e) { e.preventDefault(); });
           btn.addEventListener('click', function () { chooseResult(entry); });
           searchDropdown.appendChild(btn);
         });
