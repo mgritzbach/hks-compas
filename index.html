@@ -242,7 +242,7 @@
       transform: translateY(-2px);
     }
     .card.hidden {
-      opacity: 0.15; pointer-events: none;
+      opacity: 0.25;
       transform: none; box-shadow: none;
     }
     @keyframes cardIn {
@@ -557,6 +557,7 @@
       padding: 0.75rem 0.9rem;
       cursor: pointer;
       color: var(--black);
+      text-decoration: none;
     }
     .search-suggestion:hover,
     .search-suggestion.active {
@@ -1665,18 +1666,21 @@
         }
         searchDropdown.innerHTML = '';
         results.forEach((entry, idx) => {
-          const btn = document.createElement('button');
-          btn.type = 'button';
+          const btn = document.createElement('a');
+          btn.href = entry.link.href;
+          btn.target = '_blank';
+          btn.rel = 'noopener noreferrer';
           btn.className = `search-suggestion${idx === activeIndex ? ' active' : ''}`;
           btn.innerHTML = `<span>${entry.label}</span><small class="category-badge">${entry.section}</small>`;
           btn.addEventListener('mouseenter', function () {
             activeIndex = idx;
             renderDropdown(results);
           });
-          // Use mousedown + preventDefault so the suggestion is captured before
-          // the search input's blur event can fire and destroy the dropdown.
-          btn.addEventListener('mousedown', function (e) { e.preventDefault(); });
-          btn.addEventListener('click', function () { chooseResult(entry); });
+          btn.addEventListener('click', function () {
+            closeDropdown();
+            searchInput.value = entry.label;
+            searchClear.classList.add('visible');
+          });
           searchDropdown.appendChild(btn);
         });
         searchDropdown.classList.add('open');
@@ -1731,15 +1735,16 @@
       const media = window.matchMedia('(prefers-color-scheme: dark)');
 
       function applyTheme(theme) {
-        const shouldDark = theme === 'dark' || (!theme && media.matches);
+        // Light mode is always default — only go dark if user explicitly chose it
+        const shouldDark = theme === 'dark';
         root.classList.toggle('dark', shouldDark);
         root.setAttribute('data-theme', shouldDark ? 'dark' : 'light');
-        if (btn) btn.textContent = shouldDark ? 'Light mode' : 'Dark mode';
+        if (btn) btn.textContent = shouldDark ? '☀ Light mode' : '🌙 Dark mode';
       }
 
       let saved = null;
       try { saved = localStorage.getItem('hks_theme'); } catch (_) {}
-      applyTheme(saved);
+      applyTheme(saved); // defaults to light if nothing saved
 
       if (btn) {
         btn.addEventListener('click', function () {
@@ -1749,13 +1754,8 @@
         });
       }
 
-      if (media.addEventListener) {
-        media.addEventListener('change', function () {
-          let current = null;
-          try { current = localStorage.getItem('hks_theme'); } catch (_) {}
-          if (!current) applyTheme(null);
-        });
-      }
+      // System colour-scheme changes are intentionally ignored —
+      // light mode is the explicit default; user must toggle manually.
     })();
 
     (function initStatus() {
