@@ -399,6 +399,412 @@
       flex-wrap: wrap; gap: 0.5rem;
     }
 
+    .alert-banner {
+      background: var(--crimson);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.8rem 1.5rem;
+    }
+    .alert-banner a {
+      color: var(--white);
+      font-weight: 700;
+      text-decoration: underline;
+    }
+    .alert-banner--emergency { background: var(--emergency-red); }
+    .alert-banner__close {
+      background: none;
+      border: none;
+      color: var(--white);
+      cursor: pointer;
+      font-size: 1.2rem;
+      line-height: 1;
+      padding: 0.1rem 0.25rem;
+    }
+    .alert-banner__close:focus-visible {
+      outline: 2px solid rgba(255,255,255,0.85);
+      outline-offset: 2px;
+    }
+
+    .countdown-strip {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .countdown-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+    }
+    .countdown-label {
+      color: var(--gray-700);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    #deadline-chips,
+    #my-shortcuts-chips,
+    #events-cards {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .deadline-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 0.7rem;
+      border-radius: var(--radius-pill);
+      background: var(--gray-100);
+      color: var(--gray-700);
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+    .deadline--ok { color: #166534; }
+    .deadline--warn { color: #B45309; }
+    .deadline--urgent { color: var(--emergency-red); }
+
+    #my-shortcuts-wrap {
+      display: none;
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+    }
+    #my-shortcuts-wrap.has-pins { display: block; }
+    .my-shortcuts-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .pin-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: var(--radius-pill);
+      background: var(--crimson-light);
+      color: var(--crimson);
+      text-decoration: none;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+    .pin-chip button {
+      background: none;
+      border: none;
+      color: var(--crimson);
+      cursor: pointer;
+      font-size: 0.95rem;
+      line-height: 1;
+      padding: 0;
+    }
+    .card-body li { position: relative; }
+    .pin-btn {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      border: none;
+      border-radius: 50%;
+      width: 1.6rem;
+      height: 1.6rem;
+      background: rgba(164,16,52,0.12);
+      color: var(--gray-500);
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity var(--t), background var(--t), color var(--t);
+    }
+    .card-body li:hover .pin-btn,
+    .card-body li:focus-within .pin-btn { opacity: 1; }
+    .pin-btn.is-pinned {
+      opacity: 1;
+      background: var(--crimson);
+      color: var(--white);
+    }
+    .card-link { padding-right: 2rem; }
+
+    .search-dropdown {
+      position: absolute;
+      top: calc(100% + 0.4rem);
+      left: 0;
+      right: 0;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      display: none;
+      overflow: hidden;
+      z-index: 120;
+    }
+    .search-dropdown.open { display: block; }
+    .search-suggestion {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 0.75rem 0.9rem;
+      cursor: pointer;
+      color: var(--black);
+    }
+    .search-suggestion:hover,
+    .search-suggestion.active {
+      background: var(--crimson-light);
+    }
+    .search-suggestion small {
+      color: var(--gray-500);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .category-badge {
+      background: var(--crimson);
+      color: white;
+      border-radius: 9999px;
+      padding: 1px 6px;
+      font-size: 0.65rem;
+    }
+    .card-link.search-jump {
+      outline: 2px solid var(--crimson);
+      outline-offset: 2px;
+      background: rgba(164,16,52,0.08);
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 5.5rem;
+      transform: translateX(-50%);
+      background: rgba(26,26,26,0.96);
+      color: var(--white);
+      padding: 0.7rem 1rem;
+      border-radius: var(--radius-pill);
+      box-shadow: var(--shadow-md);
+      font-size: 0.85rem;
+      font-weight: 600;
+      z-index: 10001;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--t);
+    }
+    .toast.visible { opacity: 1; }
+
+    .mobile-bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: none;
+      align-items: stretch;
+      justify-content: space-around;
+      background: rgba(26,26,26,0.97);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      z-index: 9998;
+      min-height: 64px;
+    }
+    .mobile-nav-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.2rem;
+      color: rgba(255,255,255,0.84);
+      text-decoration: none;
+      background: none;
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+      cursor: pointer;
+    }
+    .mnav-icon {
+      font-size: 1.05rem;
+      line-height: 1;
+    }
+
+    :root.dark,
+    :root[data-theme="dark"] {
+      --crimson-light: #2C1117;
+      --black: #F3F4F6;
+      --gray-800: #E5E7EB;
+      --gray-700: #D1D5DB;
+      --gray-500: #9CA3AF;
+      --gray-300: #4B5563;
+      --gray-200: #374151;
+      --gray-100: #1F2937;
+      --gray-50: #111827;
+      --white: #1A1F2B;
+      --link-blue: #93C5FD;
+      --link-hover: #BFDBFE;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --crimson-light: #2C1117;
+        --black: #F3F4F6;
+        --gray-800: #E5E7EB;
+        --gray-700: #D1D5DB;
+        --gray-500: #9CA3AF;
+        --gray-300: #4B5563;
+        --gray-200: #374151;
+        --gray-100: #1F2937;
+        --gray-50: #111827;
+        --white: #1A1F2B;
+        --link-blue: #93C5FD;
+        --link-hover: #BFDBFE;
+      }
+    }
+    #dark-toggle {
+      margin-left: auto;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: var(--radius-pill);
+      background: var(--crimson);
+      color: var(--white);
+      padding: 0.45rem 0.8rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-top: 0.2rem;
+    }
+    .status-dot--online { background: #22C55E; }
+    .status-dot--offline { background: var(--emergency-red); }
+    .status-dot--unknown { background: var(--gray-300); }
+
+    #print-header { display: none; }
+    #print-btn {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.82);
+      border-radius: var(--radius-pill);
+      padding: 0.35rem 0.7rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+    @media print {
+      header,
+      .quick-bar,
+      .intro-band,
+      .countdown-strip,
+      #my-shortcuts-wrap,
+      #alert-banner-container,
+      #emergency-widget,
+      .mobile-bottom-nav,
+      footer,
+      .card-toggle,
+      .card-footer,
+      #search-status,
+      #no-results { display: none !important; }
+      body, main {
+        background: #fff !important;
+        color: #000 !important;
+        padding: 0 !important;
+      }
+      #print-header {
+        display: block !important;
+        margin-bottom: 1rem;
+      }
+      .card-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.75rem !important;
+      }
+      .card {
+        box-shadow: none !important;
+        border: 1px solid #ddd;
+      }
+      .card-header {
+        background: var(--crimson) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .card-link {
+        color: #000 !important;
+        transform: none !important;
+      }
+      .card-link a::after {
+        content: ' (' attr(href) ')';
+        font-size: 0.75em;
+        color: #555;
+      }
+    }
+
+    #events-strip {
+      display: none;
+      background: var(--white);
+      border-top: 1px solid var(--gray-200);
+      margin-top: 1.5rem;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .events-strip-inner {
+      display: flex;
+      gap: 0.85rem;
+      overflow-x: auto;
+      padding: 1rem;
+      align-items: stretch;
+    }
+    .events-strip-label {
+      flex: 0 0 auto;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-700);
+      min-width: 100px;
+      padding-top: 0.3rem;
+    }
+    .event-card {
+      flex: 0 0 200px;
+      min-width: 180px;
+      max-width: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      padding: 0.9rem;
+      border-radius: var(--radius-md);
+      background: var(--gray-50);
+      text-decoration: none;
+    }
+    .event-card__date {
+      color: var(--crimson);
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .event-card__title {
+      color: var(--black);
+      font-size: 0.9rem;
+      line-height: 1.35;
+    }
+    .skeleton {
+      background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-200) 37%, var(--gray-100) 63%);
+      background-size: 400% 100%;
+      animation: shimmer 1.4s ease infinite;
+      min-height: 92px;
+    }
+    @keyframes shimmer {
+      0% { background-position: 100% 0; }
+      100% { background-position: 0 0; }
+    }
+
     /* ─── RESPONSIVE ─────────────────────────────────────────── */
     @media (max-width: 1023px) {
       .card-grid { grid-template-columns: repeat(2, 1fr); }
@@ -421,6 +827,13 @@
       main { padding: 1.25rem 1rem 4rem; }
       .intro-inner { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
       .intro-text h1 { font-size: 1.25rem; }
+      body { padding-bottom: 64px; }
+      .mobile-bottom-nav { display: flex; }
+      .mobile-bottom-nav a:active,
+      .mobile-bottom-nav button:active {
+        color: var(--crimson);
+        background: rgba(164,16,52,0.1);
+      }
     }
 
     /* Stagger animation delays */
@@ -457,9 +870,11 @@
         />
         <button class="search-clear" id="search-clear" aria-label="Clear search">×</button>
         <span class="kbd-hint" aria-hidden="true">⌘K</span>
+        <div class="search-dropdown" id="search-dropdown"></div>
       </div>
 
       <p class="header-sub" aria-hidden="true">Harvard Kennedy School</p>
+      <button id="dark-toggle" type="button" aria-label="Toggle dark mode">Dark mode</button>
     </div>
   </header>
 
@@ -469,14 +884,17 @@
       <a href="https://canvas.harvard.edu" target="_blank" rel="noopener" class="quick-btn" aria-label="Canvas — Learning Management System">
         <span class="quick-icon" aria-hidden="true">🎓</span>
         <span class="quick-label">Canvas</span>
+        <span class="status-dot status-dot--unknown" data-check-url="https://canvas.harvard.edu/" aria-label="Canvas: status unknown"></span>
       </a>
       <a href="https://hks-harvard-csm.symplicity.com/students/" target="_blank" rel="noopener" class="quick-btn" aria-label="JACK — Career Management System">
         <span class="quick-icon" aria-hidden="true">💼</span>
         <span class="quick-label">JACK Career</span>
+        <span class="status-dot status-dot--unknown" data-check-url="https://hks-harvard-csm.symplicity.com/students/" aria-label="JACK Career: status unknown"></span>
       </a>
       <a href="https://my.harvard.edu" target="_blank" rel="noopener" class="quick-btn" aria-label="My.Harvard — Course Registration">
         <span class="quick-icon" aria-hidden="true">📋</span>
         <span class="quick-label">My.Harvard</span>
+        <span class="status-dot status-dot--unknown" data-check-url="https://my.harvard.edu/" aria-label="My.Harvard: status unknown"></span>
       </a>
       <a href="https://hollis.harvard.edu" target="_blank" rel="noopener" class="quick-btn" aria-label="HOLLIS — Harvard Library Catalog">
         <span class="quick-icon" aria-hidden="true">📚</span>
@@ -502,6 +920,22 @@
   </nav>
 
   <!-- ═══════════════════ INTRO BAND ════════════════════════════ -->
+  <div id="alert-banner-container"></div>
+
+  <div class="countdown-strip" id="countdown-strip">
+    <div class="countdown-inner">
+      <span class="countdown-label">Upcoming deadlines</span>
+      <div id="deadline-chips"></div>
+    </div>
+  </div>
+
+  <div id="my-shortcuts-wrap">
+    <div class="my-shortcuts-inner">
+      <span class="countdown-label">My shortcuts</span>
+      <div id="my-shortcuts-chips"></div>
+    </div>
+  </div>
+
   <div class="intro-band">
     <div class="intro-inner">
       <div class="intro-text">
@@ -529,6 +963,11 @@
           clear the search
         </button>.
       </p>
+    </div>
+
+    <div id="print-header">
+      <h1>HKS Compass Directory</h1>
+      <p>Printed <span id="print-date"></span></p>
     </div>
 
     <div class="card-grid" id="card-grid">
@@ -718,6 +1157,13 @@
       </article>
 
     </div><!-- /card-grid -->
+
+    <div id="events-strip">
+      <div class="events-strip-inner">
+        <div class="events-strip-label">HKS Hub Events</div>
+        <div id="events-cards"></div>
+      </div>
+    </div>
   </main>
 
   <!-- ═══════════════════ EMERGENCY WIDGET ═════════════════════ -->
@@ -759,15 +1205,38 @@
       </div>
     </div>
     <div class="footer-copy">
+      <button id="print-btn" type="button">Print / Save PDF</button>
       <span>© 2026 The President and Fellows of Harvard College — Harvard Kennedy School</span>
       <span>Built by the Office of the CIO &amp; Student Experience Team</span>
     </div>
+    <nav class="mobile-bottom-nav" aria-label="Mobile quick navigation">
+      <a class="mobile-nav-btn" href="https://canvas.harvard.edu" target="_blank" rel="noopener"><span class="mnav-icon" aria-hidden="true">CV</span><span>Canvas</span></a>
+      <a class="mobile-nav-btn" href="https://hks-harvard-csm.symplicity.com/students/" target="_blank" rel="noopener"><span class="mnav-icon" aria-hidden="true">JK</span><span>JACK</span></a>
+      <a class="mobile-nav-btn" href="https://my.harvard.edu" target="_blank" rel="noopener"><span class="mnav-icon" aria-hidden="true">MH</span><span>My.Harvard</span></a>
+      <a class="mobile-nav-btn" href="https://hub.hks.harvard.edu" target="_blank" rel="noopener"><span class="mnav-icon" aria-hidden="true">HB</span><span>HKS Hub</span></a>
+      <button class="mobile-nav-btn" id="mobile-search-btn" type="button"><span class="mnav-icon" aria-hidden="true">Go</span><span>Search</span></button>
+    </nav>
   </footer>
 
   <!-- ═══════════════════ JAVASCRIPT ════════════════════════════ -->
   <script>
   (function () {
     'use strict';
+    const ANNOUNCEMENTS = [
+      {
+        id: 'ann-spring26',
+        type: 'info',
+        text: 'Add/Drop closes Friday, May 2. Review registration details in My.Harvard.',
+        url: 'https://my.harvard.edu/'
+      }
+    ];
+    const DEADLINES = [
+      { label: 'Add/Drop Close', date: '2026-05-02T23:59' },
+      { label: 'Reading Period', date: '2026-05-02T00:00' },
+      { label: 'Final Exams End', date: '2026-05-12T17:00' },
+      { label: 'Commencement', date: '2026-05-29T10:00' },
+      { label: 'Fin Aid Deadline', date: '2026-06-01T23:59' }
+    ];
 
     // ── Live date pill ────────────────────────────────────────────
     (function () {
@@ -795,6 +1264,7 @@
     const liveRegion   = document.getElementById('live-region');
     const cards        = Array.from(document.querySelectorAll('.card'));
     const allLinks     = Array.from(document.querySelectorAll('.card-link'));
+    const searchDropdown = document.getElementById('search-dropdown');
 
     // Store original text content (plain) + innerHTML for display separately
     allLinks.forEach(link => {
@@ -889,6 +1359,24 @@
       searchInput.focus();
     }
 
+    let toastTimer = null;
+    function showToast(message) {
+      let toast = document.querySelector('.toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.setAttribute('role', 'status');
+        toast.setAttribute('aria-live', 'polite');
+        document.body.appendChild(toast);
+      }
+      toast.textContent = message;
+      toast.classList.add('visible');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () {
+        toast.classList.remove('visible');
+      }, 3000);
+    }
+
     searchClear.addEventListener('click', clearSearch);
     if (clearBtn) clearBtn.addEventListener('click', clearSearch);
 
@@ -965,6 +1453,423 @@
     });
 
     // ── Emergency Widget ──────────────────────────────────────────
+    (function initBanner() {
+      const container = document.getElementById('alert-banner-container');
+      if (!container) return;
+
+      function dismissBanner(id, node) {
+        try { localStorage.setItem('banner_dismissed_v' + id, '1'); } catch (_) {}
+        if (node && node.parentNode) node.parentNode.removeChild(node);
+      }
+
+      ANNOUNCEMENTS.forEach(item => {
+        let dismissed = false;
+        try { dismissed = localStorage.getItem('banner_dismissed_v' + item.id) === '1'; } catch (_) {}
+        if (dismissed) return;
+
+        const banner = document.createElement('div');
+        banner.className = `alert-banner${item.type === 'emergency' ? ' alert-banner--emergency' : ''}`;
+        banner.setAttribute('role', item.type === 'emergency' ? 'alert' : 'status');
+        banner.innerHTML = `<div><span>${item.text}</span> <a href="${item.url}" target="_blank" rel="noopener">Open</a></div>`;
+
+        const close = document.createElement('button');
+        close.type = 'button';
+        close.className = 'alert-banner__close';
+        close.setAttribute('aria-label', 'Dismiss announcement');
+        close.textContent = 'x';
+        close.addEventListener('click', function () { dismissBanner(item.id, banner); });
+        banner.appendChild(close);
+        container.appendChild(banner);
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') return;
+        if (searchInput && searchInput.value) return;
+        const openBanner = container.querySelector('.alert-banner');
+        if (!openBanner) return;
+        const active = ANNOUNCEMENTS.find(item => {
+          try { return localStorage.getItem('banner_dismissed_v' + item.id) !== '1'; } catch (_) { return true; }
+        });
+        dismissBanner(active ? active.id : 'banner', openBanner);
+      });
+    })();
+
+    (function initCountdown() {
+      const strip = document.getElementById('countdown-strip');
+      const chipsWrap = document.getElementById('deadline-chips');
+      if (!strip || !chipsWrap) return;
+
+      function getUrgency(ms) {
+        const hours = ms / 36e5;
+        return hours <= 48 ? 'deadline--urgent' : hours <= 168 ? 'deadline--warn' : 'deadline--ok';
+      }
+
+      function renderCountdown() {
+        const now = new Date();
+        const upcoming = DEADLINES
+          .map(item => ({ item, when: new Date(item.date), diff: new Date(item.date) - now }))
+          .filter(entry => entry.diff > 0);
+
+        if (!upcoming.length) {
+          strip.style.display = 'none';
+          return;
+        }
+
+        strip.style.display = '';
+        chipsWrap.innerHTML = '';
+        upcoming.forEach(({ item, diff }) => {
+          const days = Math.floor(diff / 86400000);
+          const hours = Math.floor((diff % 86400000) / 3600000);
+          const chip = document.createElement('span');
+          chip.className = `deadline-chip ${getUrgency(diff)}`;
+          chip.textContent = `${item.label}: ${days}d ${hours}h`;
+          chipsWrap.appendChild(chip);
+        });
+      }
+
+      renderCountdown();
+      window.setInterval(renderCountdown, 60000);
+    })();
+
+    (function initPins() {
+      const wrap = document.getElementById('my-shortcuts-wrap');
+      const chips = document.getElementById('my-shortcuts-chips');
+      if (!wrap || !chips) return;
+      const storageKey = 'hks_pins';
+      const maxPins = 8;
+
+      function loadPins() {
+        try {
+          const parsed = JSON.parse(localStorage.getItem(storageKey) || '[]');
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (_) {
+          return [];
+        }
+      }
+
+      function savePins(pins) {
+        try { localStorage.setItem(storageKey, JSON.stringify(pins.slice(0, maxPins))); } catch (_) {}
+      }
+
+      function syncButtons(pins) {
+        allLinks.forEach(link => {
+          const btn = link.parentElement ? link.parentElement.querySelector('.pin-btn') : null;
+          if (!btn) return;
+          const pinned = pins.some(pin => pin.href === link.href);
+          btn.classList.toggle('is-pinned', pinned);
+          btn.setAttribute('aria-pressed', String(pinned));
+        });
+      }
+
+      function renderPins() {
+        const pins = loadPins();
+        chips.innerHTML = '';
+        wrap.classList.toggle('has-pins', pins.length > 0);
+        pins.forEach(pin => {
+          const chip = document.createElement('a');
+          chip.className = 'pin-chip';
+          chip.href = pin.href;
+          chip.target = '_blank';
+          chip.rel = 'noopener';
+          chip.textContent = pin.label;
+          const remove = document.createElement('button');
+          remove.type = 'button';
+          remove.setAttribute('aria-label', `Remove ${pin.label}`);
+          remove.textContent = 'x';
+          remove.addEventListener('click', function (e) {
+            e.preventDefault();
+            const next = loadPins().filter(item => item.href !== pin.href);
+            savePins(next);
+            renderPins();
+            syncButtons(next);
+          });
+          chip.appendChild(remove);
+          chips.appendChild(chip);
+        });
+        syncButtons(pins);
+      }
+
+      allLinks.forEach(link => {
+        if (!link.parentElement || link.parentElement.querySelector('.pin-btn')) return;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'pin-btn';
+        btn.setAttribute('aria-label', `Pin ${link.textContent.trim()}`);
+        btn.setAttribute('aria-pressed', 'false');
+        btn.textContent = '+';
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const current = loadPins();
+          const exists = current.some(item => item.href === link.href);
+          if (!exists && current.length >= maxPins) {
+            showToast('Max 8 shortcuts reached');
+            return;
+          }
+          const next = exists
+            ? current.filter(item => item.href !== link.href)
+            : current.concat([{ href: link.href, label: link.textContent.trim() }]).slice(0, maxPins);
+          savePins(next);
+          renderPins();
+        });
+        link.parentElement.appendChild(btn);
+      });
+
+      renderPins();
+    })();
+
+    (function initAutocomplete() {
+      if (!searchInput || !searchDropdown) return;
+      const index = allLinks.map(link => ({
+        label: link.getAttribute('data-plain-text') || link.textContent.trim(),
+        haystack: `${link.getAttribute('data-plain-text') || ''} ${link.getAttribute('data-search') || ''}`.toLowerCase(),
+        section: (link.closest('.card')?.querySelector('.card-title')?.textContent || '').trim(),
+        link
+      }));
+      let activeIndex = -1;
+      let results = [];
+
+      function closeDropdown() {
+        searchDropdown.classList.remove('open');
+        searchDropdown.innerHTML = '';
+        activeIndex = -1;
+      }
+
+      function highlightSelection(link) {
+        allLinks.forEach(item => item.classList.remove('search-jump'));
+        link.classList.remove('search-jump');
+        link.offsetWidth;
+        link.classList.add('search-jump');
+        setTimeout(() => link.classList.remove('search-jump'), 1800);
+      }
+
+      function chooseResult(entry) {
+        if (!entry) return;
+        searchInput.value = entry.label;
+        searchClear.classList.add('visible');
+        runSearch(entry.label);
+        closeDropdown();
+        const card = entry.link.closest('.card');
+        if (card) card.classList.remove('hidden');
+        entry.link.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        highlightSelection(entry.link);
+        entry.link.focus();
+      }
+
+      function renderDropdown(items) {
+        results = items.slice(0, 5);
+        if (!results.length) {
+          closeDropdown();
+          return;
+        }
+        searchDropdown.innerHTML = '';
+        results.forEach((entry, idx) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = `search-suggestion${idx === activeIndex ? ' active' : ''}`;
+          btn.innerHTML = `<span>${entry.label}</span><small class="category-badge">${entry.section}</small>`;
+          btn.addEventListener('mouseenter', function () {
+            activeIndex = idx;
+            renderDropdown(results);
+          });
+          btn.addEventListener('click', function () { chooseResult(entry); });
+          searchDropdown.appendChild(btn);
+        });
+        searchDropdown.classList.add('open');
+      }
+
+      searchInput.addEventListener('input', function () {
+        const q = this.value.trim().toLowerCase();
+        if (q.length < 2) {
+          closeDropdown();
+          return;
+        }
+        activeIndex = -1;
+        const matches = index.filter(item => item.haystack.includes(q));
+        renderDropdown(matches);
+      });
+
+      searchInput.addEventListener('keydown', function (e) {
+        if (!searchDropdown.classList.contains('open')) return;
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          activeIndex = (activeIndex + 1) % results.length;
+          renderDropdown(results);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          activeIndex = activeIndex <= 0 ? results.length - 1 : activeIndex - 1;
+          renderDropdown(results);
+        } else if (e.key === 'Enter' && activeIndex >= 0) {
+          e.preventDefault();
+          chooseResult(results[activeIndex]);
+        } else if (e.key === 'Escape') {
+          closeDropdown();
+        }
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.search-wrap')) closeDropdown();
+      });
+    })();
+
+    (function initMobileNav() {
+      const btn = document.getElementById('mobile-search-btn');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => searchInput && searchInput.focus(), 200);
+      });
+    })();
+
+    (function initDarkMode() {
+      const btn = document.getElementById('dark-toggle');
+      const root = document.documentElement;
+      const media = window.matchMedia('(prefers-color-scheme: dark)');
+
+      function applyTheme(theme) {
+        const shouldDark = theme === 'dark' || (!theme && media.matches);
+        root.classList.toggle('dark', shouldDark);
+        root.setAttribute('data-theme', shouldDark ? 'dark' : 'light');
+        if (btn) btn.textContent = shouldDark ? 'Light mode' : 'Dark mode';
+      }
+
+      let saved = null;
+      try { saved = localStorage.getItem('hks_theme'); } catch (_) {}
+      applyTheme(saved);
+
+      if (btn) {
+        btn.addEventListener('click', function () {
+          const next = root.classList.contains('dark') ? 'light' : 'dark';
+          try { localStorage.setItem('hks_theme', next); } catch (_) {}
+          applyTheme(next);
+        });
+      }
+
+      if (media.addEventListener) {
+        media.addEventListener('change', function () {
+          let current = null;
+          try { current = localStorage.getItem('hks_theme'); } catch (_) {}
+          if (!current) applyTheme(null);
+        });
+      }
+    })();
+
+    (function initStatus() {
+      const dots = Array.from(document.querySelectorAll('.status-dot[data-check-url]'));
+      if (!dots.length) return;
+
+      function getSystemName(dot) {
+        const parent = dot.closest('.quick-btn');
+        const label = parent ? parent.querySelector('.quick-label') : null;
+        return (label ? label.textContent : '').trim() || 'System';
+      }
+
+      function setState(dot, state) {
+        dot.classList.remove('status-dot--online', 'status-dot--offline', 'status-dot--unknown');
+        dot.classList.add(`status-dot--${state}`);
+        const systemName = getSystemName(dot);
+        const statusText = state === 'online'
+          ? 'online'
+          : state === 'offline'
+            ? 'offline'
+            : 'status unknown';
+        dot.setAttribute('aria-label', `${systemName}: ${statusText}`);
+      }
+
+      function ping(dot) {
+        const url = dot.getAttribute('data-check-url');
+        if (!url) return Promise.resolve();
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 4000);
+        return fetch(url, { method: 'HEAD', mode: 'no-cors', signal: controller.signal })
+          .then(() => setState(dot, 'online'))
+          .catch(() => setState(dot, 'unknown'))
+          .finally(() => clearTimeout(timer));
+      }
+
+      function runChecks() {
+        dots.forEach(dot => { setState(dot, 'unknown'); });
+        Promise.all(dots.map(ping));
+      }
+
+      runChecks();
+      window.setInterval(runChecks, 300000);
+    })();
+
+    (function initPrint() {
+      const btn = document.getElementById('print-btn');
+      const date = document.getElementById('print-date');
+      if (!btn || !date) return;
+      btn.addEventListener('click', function () {
+        date.textContent = new Date().toLocaleString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit'
+        });
+        window.print();
+      });
+    })();
+
+    (function initEvents() {
+      const strip = document.getElementById('events-strip');
+      const cardsWrap = document.getElementById('events-cards');
+      if (!strip || !cardsWrap) return;
+
+      function renderSkeletons() {
+        strip.style.display = 'block';
+        cardsWrap.innerHTML = '';
+        for (let i = 0; i < 3; i++) {
+          const skel = document.createElement('div');
+          skel.className = 'event-card skeleton';
+          cardsWrap.appendChild(skel);
+        }
+      }
+
+      function getItems(payload) {
+        if (Array.isArray(payload)) return payload;
+        if (payload && Array.isArray(payload.records)) return payload.records;
+        if (payload && Array.isArray(payload.events)) return payload.events;
+        if (payload && Array.isArray(payload.items)) return payload.items;
+        return [];
+      }
+
+      function formatDate(value) {
+        const date = new Date(value);
+        return Number.isNaN(date.getTime())
+          ? ''
+          : date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      }
+
+      renderSkeletons();
+      fetch('https://hub.hks.harvard.edu/events?format=json&pageSize=5')
+        .then(resp => resp.json())
+        .then(data => {
+          const items = getItems(data).slice(0, 5).filter(item => item && (item.title || item.name));
+          if (!items.length) {
+            strip.style.display = 'none';
+            return;
+          }
+          cardsWrap.innerHTML = '';
+          items.forEach(item => {
+            const card = document.createElement(item.url || item.link ? 'a' : 'div');
+            card.className = 'event-card';
+            if (card.tagName === 'A') {
+              card.href = item.url || item.link;
+              card.target = '_blank';
+              card.rel = 'noopener';
+            }
+            card.innerHTML = `<div class="event-card__date">${formatDate(item.startDate || item.date || item.start || item.startsAt)}</div><div class="event-card__title">${item.title || item.name}</div>`;
+            cardsWrap.appendChild(card);
+          });
+          strip.style.display = 'block';
+        })
+        .catch(() => {
+          strip.style.display = 'none';
+        });
+    })();
+
     const emergencyBtn   = document.getElementById('emergency-btn');
     const emergencyPanel = document.getElementById('emergency-panel');
 
