@@ -1636,52 +1636,37 @@
         activeIndex = -1;
       }
 
-      function highlightSelection(link) {
-        allLinks.forEach(item => item.classList.remove('search-jump'));
-        link.classList.remove('search-jump');
-        link.offsetWidth;
-        link.classList.add('search-jump');
-        setTimeout(() => link.classList.remove('search-jump'), 1800);
-      }
 
-      function chooseResult(entry) {
-        if (!entry) return;
-        searchInput.value = entry.label;
-        searchClear.classList.add('visible');
-        runSearch(entry.label);
-        closeDropdown();
-        const card = entry.link.closest('.card');
-        if (card) card.classList.remove('hidden');
-        entry.link.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        highlightSelection(entry.link);
-        // Navigate to the link — this is what the user expects when selecting a result
-        entry.link.click();
+      function setActiveClass() {
+        Array.from(searchDropdown.querySelectorAll('.search-suggestion')).forEach((el, i) => {
+          el.classList.toggle('active', i === activeIndex);
+        });
       }
 
       function renderDropdown(items) {
         results = items.slice(0, 5);
-        if (!results.length) {
-          closeDropdown();
-          return;
-        }
+        if (!results.length) { closeDropdown(); return; }
+        // Only rebuild DOM when the result set changes; never rebuild on hover
         searchDropdown.innerHTML = '';
         results.forEach((entry, idx) => {
-          const btn = document.createElement('a');
-          btn.href = entry.link.href;
-          btn.target = '_blank';
-          btn.rel = 'noopener noreferrer';
-          btn.className = `search-suggestion${idx === activeIndex ? ' active' : ''}`;
-          btn.innerHTML = `<span>${entry.label}</span><small class="category-badge">${entry.section}</small>`;
-          btn.addEventListener('mouseenter', function () {
+          const a = document.createElement('a');
+          a.href = entry.link.href;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.className = 'search-suggestion' + (idx === activeIndex ? ' active' : '');
+          a.innerHTML = `<span>${entry.label}</span><small class="category-badge">${entry.section}</small>`;
+          // Update activeIndex in-place — NEVER re-render; just swap CSS class
+          a.addEventListener('mouseenter', function () {
             activeIndex = idx;
-            renderDropdown(results);
+            setActiveClass();
           });
-          btn.addEventListener('click', function () {
-            closeDropdown();
+          // Click: update search field then let the browser follow the href naturally
+          a.addEventListener('click', function () {
             searchInput.value = entry.label;
             searchClear.classList.add('visible');
+            closeDropdown();
           });
-          searchDropdown.appendChild(btn);
+          searchDropdown.appendChild(a);
         });
         searchDropdown.classList.add('open');
       }
@@ -1702,14 +1687,20 @@
         if (e.key === 'ArrowDown') {
           e.preventDefault();
           activeIndex = (activeIndex + 1) % results.length;
-          renderDropdown(results);
+          setActiveClass();
         } else if (e.key === 'ArrowUp') {
           e.preventDefault();
           activeIndex = activeIndex <= 0 ? results.length - 1 : activeIndex - 1;
-          renderDropdown(results);
+          setActiveClass();
         } else if (e.key === 'Enter' && activeIndex >= 0) {
           e.preventDefault();
-          chooseResult(results[activeIndex]);
+          const entry = results[activeIndex];
+          if (entry) {
+            searchInput.value = entry.label;
+            searchClear.classList.add('visible');
+            closeDropdown();
+            window.open(entry.link.href, '_blank', 'noopener,noreferrer');
+          }
         } else if (e.key === 'Escape') {
           closeDropdown();
         }
