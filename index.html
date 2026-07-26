@@ -390,6 +390,139 @@
     #live-region { position: absolute; left: -9999px; }
 
     /* ─── FOOTER ──────────────────────────────────────────────── */
+    /* Support HKS Compass */
+    .support-strip {
+      background: linear-gradient(135deg, #FFF8F1 0%, var(--white) 70%);
+      border-top: 1px solid var(--gray-200);
+      padding: 1.4rem 1.5rem;
+    }
+    .support-strip__inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .support-strip__icon {
+      width: 46px;
+      height: 46px;
+      flex: 0 0 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #F6E7D8;
+      font-size: 1.35rem;
+    }
+    .support-strip__copy { flex: 1; min-width: 0; }
+    .support-eyebrow {
+      color: var(--crimson);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+    .support-strip h2 {
+      margin-top: 0.15rem;
+      color: var(--black);
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      line-height: 1.25;
+    }
+    .support-strip__copy > p:last-child {
+      margin-top: 0.2rem;
+      color: var(--gray-700);
+      font-size: 0.78rem;
+      line-height: 1.45;
+    }
+    .support-venmo-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      flex: 0 0 auto;
+      border-radius: var(--radius-pill);
+      background: #008CFF;
+      color: #fff;
+      padding: 0.65rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 750;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,140,255,0.2);
+      transition: transform var(--t), background var(--t), box-shadow var(--t);
+    }
+    .support-venmo-btn:hover {
+      background: #0074D4;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0,140,255,0.26);
+    }
+    .support-venmo-btn:focus-visible {
+      outline: 3px solid rgba(0,140,255,0.3);
+      outline-offset: 3px;
+    }
+    .support-venmo-btn span { opacity: 0.85; font-weight: 600; }
+
+    #support-popover {
+      position: fixed;
+      right: 5.75rem;
+      bottom: 1.5rem;
+      z-index: 9997;
+      width: min(310px, calc(100vw - 2rem));
+      padding: 1rem;
+      border: 1px solid var(--gray-200);
+      border-top: 3px solid var(--crimson);
+      border-radius: var(--radius-lg);
+      background: var(--white);
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(14px);
+      transition: opacity 180ms ease, transform 180ms ease, visibility 180ms;
+    }
+    #support-popover.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .support-popover__close {
+      position: absolute;
+      top: 0.45rem;
+      right: 0.45rem;
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--gray-700);
+      cursor: pointer;
+      font-size: 1.15rem;
+      line-height: 1;
+    }
+    .support-popover__close:hover { background: var(--gray-100); color: var(--black); }
+    .support-popover__close:focus-visible { outline: 2px solid var(--crimson); }
+    #support-popover h2 {
+      margin: 0.2rem 2rem 0.3rem 0;
+      color: var(--black);
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      line-height: 1.25;
+    }
+    .support-popover__text {
+      margin-bottom: 0.75rem;
+      color: var(--gray-700);
+      font-size: 0.78rem;
+      line-height: 1.45;
+    }
+    #support-popover .support-venmo-btn { width: 100%; }
+    .support-popover__note {
+      display: block;
+      margin-top: 0.5rem;
+      color: var(--gray-500);
+      font-size: 0.66rem;
+      text-align: center;
+    }
+
     footer { background: var(--black); color: rgba(255,255,255,0.72); padding: 2.5rem 1.5rem; }
     .footer-inner {
       max-width: 1280px; margin: 0 auto;
@@ -728,6 +861,8 @@
       #my-shortcuts-wrap,
       #alert-banner-container,
       #emergency-widget,
+      #support-popover,
+      .support-strip,
       .mobile-bottom-nav,
       footer,
       .card-toggle,
@@ -846,6 +981,12 @@
       .card-footer.collapsed { display: none; }
       .footer-inner { grid-template-columns: 1fr; gap: 1.5rem; }
       .footer-copy { flex-direction: column; text-align: center; }
+      .support-strip { padding: 1.25rem 1rem; }
+      .support-strip__inner { align-items: flex-start; flex-wrap: wrap; }
+      .support-strip__icon { width: 40px; height: 40px; flex-basis: 40px; }
+      .support-strip__copy { flex-basis: calc(100% - 56px); }
+      .support-strip .support-venmo-btn { width: 100%; }
+      #support-popover { right: 1rem; bottom: 5.25rem; }
       main { padding: 1.25rem 1rem 4rem; }
       .intro-inner { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
       .intro-text h1 { font-size: 1.25rem; }
@@ -856,6 +997,11 @@
         color: var(--crimson);
         background: rgba(164,16,52,0.1);
       }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #support-popover,
+      .support-venmo-btn { transition: none; }
     }
 
     /* Stagger animation delays */
@@ -1227,6 +1373,27 @@
       </div>
     </div>
   </main>
+
+  <section class="support-strip" aria-labelledby="support-title">
+    <div class="support-strip__inner">
+      <div class="support-strip__icon" aria-hidden="true">&#9749;</div>
+      <div class="support-strip__copy">
+        <p class="support-eyebrow">Independent &amp; free</p>
+        <h2 id="support-title">If HKS Compass saved you time, buy me a coffee.</h2>
+        <p>I build and maintain this page in my spare time so it stays free for everyone. A coffee-sized tip helps cover the upkeep.</p>
+      </div>
+      <a class="support-venmo-btn" href="https://venmo.com/u/mgritzbach" target="_blank" rel="noopener" data-donation-link aria-label="Support HKS Compass on Venmo at mgritzbach">&#9749; Support on Venmo <span>@mgritzbach</span></a>
+    </div>
+  </section>
+
+  <aside id="support-popover" role="region" aria-labelledby="support-popover-title" aria-hidden="true">
+    <button class="support-popover__close" type="button" aria-label="Dismiss support message">&times;</button>
+    <p class="support-eyebrow">Found this useful?</p>
+    <h2 id="support-popover-title">Help keep HKS Compass free</h2>
+    <p class="support-popover__text">I maintain this page independently and unpaid. If it saved you a few clicks, consider sending a coffee.</p>
+    <a class="support-venmo-btn" href="https://venmo.com/u/mgritzbach" target="_blank" rel="noopener" data-donation-link aria-label="Buy the HKS Compass maintainer a coffee on Venmo">&#9749; Buy me a coffee</a>
+    <span class="support-popover__note">Optional support &middot; Venmo @mgritzbach</span>
+  </aside>
 
   <!-- ═══════════════════ EMERGENCY WIDGET ═════════════════════ -->
   <div id="emergency-widget" aria-label="Emergency contacts quick access">
@@ -1924,6 +2091,65 @@
         .catch(() => {
           strip.style.display = 'none';
         });
+    })();
+
+    // Show the support prompt only after the visitor has used the page.
+    (function initSupportPrompt() {
+      const prompt = document.getElementById('support-popover');
+      const closeBtn = prompt && prompt.querySelector('.support-popover__close');
+      const storageKey = 'hks_support_prompt_dismissed_at';
+      const frequencyCapMs = 30 * 24 * 60 * 60 * 1000;
+      let hasShown = false;
+      let timerId;
+
+      if (!prompt || !closeBtn) return;
+
+      function dismissedRecently() {
+        try {
+          const dismissedAt = Number(localStorage.getItem(storageKey) || 0);
+          return dismissedAt > 0 && Date.now() - dismissedAt < frequencyCapMs;
+        } catch (_) {
+          return false;
+        }
+      }
+
+      function rememberDismissal() {
+        try { localStorage.setItem(storageKey, String(Date.now())); } catch (_) {}
+      }
+
+      function showPrompt() {
+        if (hasShown || dismissedRecently()) return;
+        hasShown = true;
+        window.clearTimeout(timerId);
+        window.removeEventListener('scroll', handleScroll);
+        prompt.classList.add('is-visible');
+        prompt.setAttribute('aria-hidden', 'false');
+      }
+
+      function dismissPrompt() {
+        rememberDismissal();
+        prompt.classList.remove('is-visible');
+        prompt.setAttribute('aria-hidden', 'true');
+      }
+
+      function handleScroll() {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        if (scrollable > 0 && window.scrollY / scrollable >= 0.4) showPrompt();
+      }
+
+      if (!dismissedRecently()) {
+        timerId = window.setTimeout(showPrompt, 18000);
+        window.addEventListener('scroll', handleScroll, { passive: true });
+      }
+
+      closeBtn.addEventListener('click', dismissPrompt);
+      document.querySelectorAll('[data-donation-link]').forEach(link => {
+        link.addEventListener('click', function () {
+          rememberDismissal();
+          prompt.classList.remove('is-visible');
+          prompt.setAttribute('aria-hidden', 'true');
+        });
+      });
     })();
 
     const emergencyBtn   = document.getElementById('emergency-btn');
