@@ -2093,32 +2093,17 @@
         });
     })();
 
-    // Show the support prompt only after the visitor has used the page.
+    // Show once on every page load, after the visitor has used the page.
     (function initSupportPrompt() {
       const prompt = document.getElementById('support-popover');
       const closeBtn = prompt && prompt.querySelector('.support-popover__close');
-      const storageKey = 'hks_support_prompt_dismissed_at';
-      const frequencyCapMs = 30 * 24 * 60 * 60 * 1000;
       let hasShown = false;
       let timerId;
 
       if (!prompt || !closeBtn) return;
 
-      function dismissedRecently() {
-        try {
-          const dismissedAt = Number(localStorage.getItem(storageKey) || 0);
-          return dismissedAt > 0 && Date.now() - dismissedAt < frequencyCapMs;
-        } catch (_) {
-          return false;
-        }
-      }
-
-      function rememberDismissal() {
-        try { localStorage.setItem(storageKey, String(Date.now())); } catch (_) {}
-      }
-
       function showPrompt() {
-        if (hasShown || dismissedRecently()) return;
+        if (hasShown) return;
         hasShown = true;
         window.clearTimeout(timerId);
         window.removeEventListener('scroll', handleScroll);
@@ -2127,7 +2112,6 @@
       }
 
       function dismissPrompt() {
-        rememberDismissal();
         prompt.classList.remove('is-visible');
         prompt.setAttribute('aria-hidden', 'true');
       }
@@ -2137,18 +2121,11 @@
         if (scrollable > 0 && window.scrollY / scrollable >= 0.4) showPrompt();
       }
 
-      if (!dismissedRecently()) {
-        timerId = window.setTimeout(showPrompt, 18000);
-        window.addEventListener('scroll', handleScroll, { passive: true });
-      }
-
+      timerId = window.setTimeout(showPrompt, 18000);
+      window.addEventListener('scroll', handleScroll, { passive: true });
       closeBtn.addEventListener('click', dismissPrompt);
       document.querySelectorAll('[data-donation-link]').forEach(link => {
-        link.addEventListener('click', function () {
-          rememberDismissal();
-          prompt.classList.remove('is-visible');
-          prompt.setAttribute('aria-hidden', 'true');
-        });
+        link.addEventListener('click', dismissPrompt);
       });
     })();
 
