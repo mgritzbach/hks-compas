@@ -285,6 +285,20 @@
     .card-body ul {
       list-style: none; display: flex; flex-direction: column; gap: 1px;
     }
+    .cross-reg-summary {
+      margin-bottom: 0.75rem;
+      padding: 0.7rem 0.75rem;
+      background: var(--gray-50);
+      border-left: 3px solid var(--crimson);
+      border-radius: var(--radius-sm);
+      color: var(--gray-700);
+    }
+    .cross-reg-summary p {
+      font-size: 0.75rem;
+      line-height: 1.45;
+    }
+    .cross-reg-summary p + p { margin-top: 0.4rem; }
+    .cross-reg-summary strong { color: var(--black); }
     .card-link {
       display: flex; align-items: center; gap: 0.4rem;
       color: var(--link-blue); text-decoration: none;
@@ -996,6 +1010,40 @@
         </div>
         <div class="card-footer" id="foot-academics">
           <a href="https://hub.hks.harvard.edu/student-and-academic-support?p=Planning+and+Registering+for+Classes" target="_blank" rel="noopener" class="card-all-link">All academic resources →</a>
+        </div>
+      </article>
+
+      <!-- External Courses -->
+      <article class="card" data-card="external-courses" aria-labelledby="h-external-courses">
+        <div class="card-header">
+          <span class="card-icon" aria-hidden="true">&#128260;</span>
+          <h2 class="card-title" id="h-external-courses">External Courses</h2>
+          <button class="card-toggle" aria-expanded="true" aria-controls="body-external-courses" aria-label="Toggle External Courses section">&#9662;</button>
+        </div>
+        <div class="card-body" id="body-external-courses">
+          <div class="cross-reg-summary">
+            <p><strong>HKS degree credit:</strong> Most students may count the equivalent of one four-credit cross-registered course per semester of residency. Joint HKS/HBS and HKS/HLS candidates follow their program rules.</p>
+            <p><strong>Pre-approved:</strong> Graduate Harvard courses and all Fletcher courses. At MIT, graduate courses numbered 11, 14, 15, or 17 are pre-approved; other MIT graduate courses require an HKS degree-credit petition.</p>
+            <p><strong>Registration:</strong> Use my.Harvard/Crimson Cart for Harvard and MIT. Fletcher requires a PDF petition to the Fletcher Registrar. Follow the host school's rules and the earlier applicable add/drop deadline.</p>
+            <p><strong>Harvard College:</strong> Undergraduate courses do not earn HKS degree credit except approved language courses.</p>
+          </div>
+          <ul>
+            <li><a href="https://www.hks.harvard.edu/admissions-blog/what-you-should-know-about-cross-registration" target="_blank" rel="noopener" class="card-link" data-search="hks cross registration guide rules approval credit limits mit hbs hls college fletcher">HKS Cross-Registration Guide</a></li>
+            <li><a href="https://www.hks.harvard.edu/educational-programs/academic-calendars-policies/student-handbook/academics" target="_blank" rel="noopener" class="card-link" data-search="hks student handbook academic cross registration rules credits grading deadlines pass fail">HKS Rules, Credits &amp; Deadlines</a></li>
+            <li><a href="https://www.hks.harvard.edu/educational-programs/courses/course-registration" target="_blank" rel="noopener" class="card-link" data-search="hks course registration cross registration crimson cart petition add drop enrollment">HKS Course Registration</a></li>
+            <li><a href="https://courses.my.harvard.edu/" target="_blank" rel="noopener" class="card-link" data-search="hbs harvard business school external courses course catalog my harvard crimson cart">HBS Courses &mdash; my.Harvard Catalog</a></li>
+            <li><a href="https://courses.my.harvard.edu/" target="_blank" rel="noopener" class="card-link" data-search="hls harvard law school external courses course catalog my harvard crimson cart">HLS Courses &mdash; my.Harvard Catalog</a></li>
+            <li><a href="https://courses.my.harvard.edu/" target="_blank" rel="noopener" class="card-link" data-search="harvard college fas faculty arts sciences undergraduate language graduate external courses catalog">Harvard College / FAS Courses</a></li>
+            <li><a href="https://hydrant.mit.edu/" target="_blank" rel="noopener" class="card-link" data-search="mit hydrant course schedule planner external courses timetable workload">MIT Hydrant &mdash; Schedule Planner</a></li>
+            <li><a href="https://catalog.mit.edu/subjects/" target="_blank" rel="noopener" class="card-link" data-search="mit course catalog subjects departments descriptions prerequisites units external courses">MIT Course Catalog &mdash; Subjects</a></li>
+            <li><a href="https://student.mit.edu/catalog/index.cgi" target="_blank" rel="noopener" class="card-link" data-search="mit subject listing schedule course catalog meeting times locations external courses">MIT Subject Listing &amp; Schedule</a></li>
+            <li><a href="https://registrar.mit.edu/registration-academics/registration-information/cross-registration/harvard/instructions-harvard" target="_blank" rel="noopener" class="card-link" data-search="mit cross registration instructions harvard students deadlines add drop kerberos id fees">MIT Cross-Registration Instructions</a></li>
+            <li><a href="https://fletcher.tufts.edu/academics/academic-calendar-courses/registrar" target="_blank" rel="noopener" class="card-link" data-search="fletcher school tufts harvard external courses class search cross registration pdf petition registrar deadlines">Fletcher Cross-Registration &amp; Course Search</a></li>
+            <li><a href="https://fletcher.tufts.edu/academics/academic-calendar-courses/courses-academic-divisions" target="_blank" rel="noopener" class="card-link" data-search="fletcher school tufts courses academic divisions descriptions catalog ilo dhp eib">Fletcher Courses &amp; Academic Divisions</a></li>
+          </ul>
+        </div>
+        <div class="card-footer" id="foot-external-courses">
+          <a href="https://courses.my.harvard.edu/" target="_blank" rel="noopener" class="card-all-link">Open the Harvard course catalog &rarr;</a>
         </div>
       </article>
 
