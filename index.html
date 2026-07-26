@@ -293,6 +293,13 @@
       border-radius: var(--radius-sm);
       color: var(--gray-700);
     }
+    .cross-reg-summary summary {
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--black);
+    }
+    .cross-reg-summary[open] summary { margin-bottom: 0.6rem; }
     .cross-reg-summary p {
       font-size: 0.75rem;
       line-height: 1.45;
@@ -1021,12 +1028,13 @@
           <button class="card-toggle" aria-expanded="true" aria-controls="body-external-courses" aria-label="Toggle External Courses section">&#9662;</button>
         </div>
         <div class="card-body" id="body-external-courses">
-          <div class="cross-reg-summary">
+          <details class="cross-reg-summary">
+            <summary>Cross-registration rules</summary>
             <p><strong>HKS degree credit:</strong> Most students may count the equivalent of one four-credit cross-registered course per semester of residency. Joint HKS/HBS and HKS/HLS candidates follow their program rules.</p>
             <p><strong>Pre-approved:</strong> Graduate Harvard courses and all Fletcher courses. At MIT, graduate courses numbered 11, 14, 15, or 17 are pre-approved; other MIT graduate courses require an HKS degree-credit petition.</p>
             <p><strong>Registration:</strong> Use my.Harvard/Crimson Cart for Harvard and MIT. Fletcher requires a PDF petition to the Fletcher Registrar. Follow the host school's rules and the earlier applicable add/drop deadline.</p>
             <p><strong>Harvard College:</strong> Undergraduate courses do not earn HKS degree credit except approved language courses.</p>
-          </div>
+          </details>
           <ul>
             <li><a href="https://www.hks.harvard.edu/admissions-blog/what-you-should-know-about-cross-registration" target="_blank" rel="noopener" class="card-link" data-search="hks cross registration guide rules approval credit limits mit hbs hls college fletcher">HKS Cross-Registration Guide</a></li>
             <li><a href="https://www.hks.harvard.edu/educational-programs/academic-calendars-policies/student-handbook/academics" target="_blank" rel="noopener" class="card-link" data-search="hks student handbook academic cross registration rules credits grading deadlines pass fail">HKS Rules, Credits &amp; Deadlines</a></li>
